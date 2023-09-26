@@ -280,6 +280,7 @@ void fill2DArray(int arr2D[][5], int size) {
     }
 }
 
+
 void print2DArray(int arr2D[][5], int size) {
     
     for(int i = 0; i < size; i++) {
@@ -289,6 +290,7 @@ void print2DArray(int arr2D[][5], int size) {
         std::cout << std::endl;
     }
 }
+
 
 void sort2DArrayRows(int arr2D[][5], int size) {
     for(int i = 0; i < size; i++) {
@@ -307,6 +309,7 @@ void sort2DArrayRows(int arr2D[][5], int size) {
     std::cout << "Sorted 2D Aray By Row: " << std::endl;
     print2DArray(arr2D, size);
 }
+
 
 void sort2DArrayWhole(int arr2D[][5], int size) {
     for(int i = 0; i < size; i++) {
