@@ -7,6 +7,8 @@ void fillArr(int arr[], int size);
 //printArr - prints array
 void printArr(int arr[], int size);
 
+void sortArray(int arr[], int size);
+
 void sortAsc(int arr[], int size);
 
 void sortDesc(int arr[], int size);
@@ -23,6 +25,15 @@ int binarySearch(int arr[], int size, int value);
 
 int sequentialSearch(int arr[], int size, int value);
 
+void fill2DArray(int arr2D[][5], int size);
+
+void sort2DArrayRows(int arr2D[][5], int size);
+
+void print2DArray(int arr2D[][5], int size);
+
+void sort2DArrayWhole(int arr2D[][5], int size);
+
+bool search2DArray(int arr2D[][5], int size, int value);
 
 int main() {
 
@@ -36,6 +47,26 @@ int main() {
     std::cout << "Default Array: ";
     printArr(arr, size);
     //Sort array
+    sortArray(arr, size);
+
+    int arr2D[size][size];
+    fill2DArray(arr2D, size);
+    std::cout << "2D Array: " << std::endl;
+    print2DArray(arr2D, size);
+    //sort2DArrayRows(arr2D, size);
+    sort2DArrayWhole(arr2D, size);
+    std::cout << "Enter value to search for: ";
+    int value;
+    std::cin >> value;
+    bool found = search2DArray(arr2D, size, value);
+    if(found)
+        std::cout << "Element was found" << std::endl;
+    else   
+        std::cout << "Element was not found" << std::endl;
+    
+}
+
+void sortArray(int arr[], int size) {
     sortAsc(arr, size);
     sortDesc(arr, size);
     bubbleSortAsc(arr, size);
@@ -232,10 +263,76 @@ int binarySearch(int arr[], int size, int value) {
 }
 
 
-int sequentialSearch(int arr[], int size, int value) {
+int sequentialSearch(int arr2D[], int size, int value) {
     for(int i = 0; i < size; i++) {
-        if(arr[i] == value)
+        if(arr2D[i] == value)
             return i;
     }
     return -1;
+}
+
+
+void fill2DArray(int arr2D[][5], int size) {
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            arr2D[i][j] = rand()%10 + 1;
+        }
+    }
+}
+
+void print2DArray(int arr2D[][5], int size) {
+    
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            std::cout << arr2D[i][j] << "\t";
+        }
+        std::cout << std::endl;
+    }
+}
+
+void sort2DArrayRows(int arr2D[][5], int size) {
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            for(int k = i; k < size; k++) {
+                for(int l = j+1; l < size; l++) {
+                    if(arr2D[i][j] > arr2D[k][l]) {
+                        int temp = arr2D[i][j];
+                        arr2D[i][j] = arr2D[k][l];
+                        arr2D[k][l] = temp;
+                    }
+                }
+            }
+        }
+    }
+    std::cout << "Sorted 2D Aray By Row: " << std::endl;
+    print2DArray(arr2D, size);
+}
+
+void sort2DArrayWhole(int arr2D[][5], int size) {
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            for(int k = 0; k < size; k++) {
+                for(int l = 0; l < size; l++) {
+                    if(arr2D[i][j] < arr2D[k][l]) {
+                        int temp = arr2D[i][j];
+                        arr2D[i][j] = arr2D[k][l];
+                        arr2D[k][l] = temp;
+                    }
+                }
+            }
+        }
+    }
+    std::cout << "Sorted 2D Aray Whole: " << std::endl;
+    print2DArray(arr2D, size);
+}
+
+
+bool search2DArray(int arr2D[][5], int size, int value) {
+    for(int i = 0; i < size; i++) {
+        for(int j = 0; j < size; j++) {
+            if(arr2D[i][j] == value)
+                return true;
+        }
+    }
+    return false;
 }
