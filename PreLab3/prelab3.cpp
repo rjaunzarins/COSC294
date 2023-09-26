@@ -7,6 +7,10 @@ void fillArr(int arr[], int size);
 //printArr - prints array
 void printArr(int arr[], int size);
 
+void sortAsc(int arr[], int size);
+
+void sortDesc(int arr[], int size);
+
 void bubbleSortAsc(int arr[], int size);
 
 void bubbleSortDesc(int arr[], int size);
@@ -32,6 +36,8 @@ int main() {
     std::cout << "Default Array: ";
     printArr(arr, size);
     //Sort array
+    sortAsc(arr, size);
+    sortDesc(arr, size);
     bubbleSortAsc(arr, size);
     bubbleSortDesc(arr, size);
     selectionSortAsc(arr, size);
@@ -67,7 +73,7 @@ void printArr(int arr[], int size) {
 }
 
 
-void bubbleSortAsc(int arr[], int size) {
+void sortAsc(int arr[], int size) {
     //Loop through array
     for(int i = 0; i < size-1; i++) {
         //Declare max = first array element
@@ -83,6 +89,45 @@ void bubbleSortAsc(int arr[], int size) {
         }
     }
     //Print sorted array
+    std::cout << "SortAsc: ";
+    printArr(arr, size);
+}
+
+
+void sortDesc(int arr[], int size) {
+    //Loop through array
+    for(int i = 0; i < size-1; i++) {
+        //Declare max = first array element
+        int min = arr[i];
+        //Search through array for larger element
+        for(int j = i+1; j < size; j++) {
+            //If larger element found, swap to arr[i]
+            if(arr[j] > min){
+                min = arr[j];
+                arr[j] = arr[i];
+                arr[i] = min;
+            }
+        }
+    }
+    //Print sorted array
+    std::cout << "SortDesc: ";
+    printArr(arr, size);
+}
+
+
+void bubbleSortAsc(int arr[], int size) {
+    //Loop through array
+    for(int i = size -1; i > 0; i--) {
+        for(int j = 0; j < i; j++) {
+            //If larger element found, swap to arr[i]
+            if(arr[j] > arr[j+1]){
+                int temp = arr[j+1];
+                arr[j+1] = arr[j];
+                arr[j] = temp;
+            }
+        }
+    }
+    //Print sorted array
     std::cout << "BubbleSortAsc: ";
     printArr(arr, size);
 }
@@ -90,16 +135,13 @@ void bubbleSortAsc(int arr[], int size) {
 
 void bubbleSortDesc(int arr[], int size) {
     //Loop through array
-    for(int i = 0; i < size-1; i++) {
-        //Declare max = first array element
-        int max = arr[i];
-        //Search through array for larger element
-        for(int j = i+1; j < size; j++) {
+    for(int i = size -1; i > 0; i--) {
+        for(int j = 0; j < i; j++) {
             //If larger element found, swap to arr[i]
-            if(arr[j] > max){
-                max = arr[j];
-                arr[j] = arr[i];
-                arr[i] = max;
+            if(arr[j] < arr[j+1]){
+                int temp = arr[j+1];
+                arr[j+1] = arr[j];
+                arr[j] = temp;
             }
         }
     }
