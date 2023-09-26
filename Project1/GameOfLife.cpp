@@ -133,8 +133,8 @@ void initializeBoard(int grid[][50], int gridRows, int gridCols) {
     //Set seed - pass current time
     srand(time(0)); 
     //Iterate through each element passing 1(alive) 20% of the time, otherwise 0 (dead)
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++){
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j){
             //Random number between 1 and 100
             int number = rand()%100 + 1;
             //If number is between 1 and 20 (20%) cell is alive
@@ -157,14 +157,14 @@ void initializeBoard(int grid[][50], int gridRows, int gridCols) {
 //Print the current state of the game
 void printStateOfGame(const int grid[][50], int gridRows, int gridCols) {
     //Draw horizontal line at top of gamestate
-    for(int l = 0; l < gridCols; l++) {
+    for(int i = 0; i < gridCols; ++i) {
         std::cout << "----";
     }
     std::cout << "-" << std::endl;
 
     //Print Gamestate
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++) {            
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j) {            
             if(grid[i][j] == 1)
                 if(j == gridCols - 1)
                     std::cout << "| * |" << std::endl;
@@ -177,7 +177,7 @@ void printStateOfGame(const int grid[][50], int gridRows, int gridCols) {
                     std::cout << "|   ";
         }
         //Draw horizontal lines for each row
-        for(int l = 0; l < gridCols; l++) {
+        for(int i = 0; i < gridCols; ++i) {
             std::cout << "----";
         }
         std::cout << "-" << std::endl;
@@ -202,7 +202,7 @@ void gameLoop(int grid[][50], int gridRows, int gridCols, int simulations) {
         //Simulate generation
         simGeneration(grid, gridRows, gridCols);
         //Iterate generation before number is printed to screen
-        currentGeneration++;
+        ++currentGeneration;
         //Print current generation header and state of game
         std::cout << "Current Generation: " << currentGeneration << std::endl;
         printStateOfGame(grid, gridRows, gridCols);
@@ -215,11 +215,11 @@ void checkGameStateAlive(int grid[][50], int gridRows, int gridCols) {
     //Number of elements with life
     int lifeCount = 0;
     //Loop through grid to check for alive elements
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++) {
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j) {
             //If element is 1 (alive), increment lifeCount
             if(grid[i][j] == 1)
-                lifeCount++;
+                ++lifeCount;
         }
     }
     //If lifeCount is zero after searching entire array, there are no elements alive -> exit
@@ -243,24 +243,24 @@ void simGeneration(int grid[][50], int gridRows, int gridCols) {
     //Create second board so changes can be made on first without changing result
     int grid2[maxGridRows][maxGridCols];  
     //Copy grid to grid2 so we can search through grid2 and update grid
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++) {
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j) {
             grid2[i][j] = grid[i][j];
         }
     }
     //Iterate through grid2 to search for alive neighbors
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++) {
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j) {
             //Declare count of neighbors for grid2[i][j]
             int count = 0; 
             //Count alive neighbors around grid2[i][j]
-            for(int k = i-1; k <= i+1; k++) {
-                for(int l = j-1; l <= j+1; l++) {
+            for(int k = i-1; k <= i+1; ++k) {
+                for(int l = j-1; l <= j+1; ++l) {
                     //If valid element in grid2 and not grid2[i][j], continue
                     if(k >= 0 && k < gridRows && l >= 0 && l < gridCols && !(k == i && l == j)){
                         //If valid element is equal to 1, increase count by 1
                         if(grid2[k][l] == 1) {
-                            count++;
+                            ++count;
                         }
                     }
                 }
@@ -294,8 +294,8 @@ void compareGamestatesEqual(const int grid[][50], const int grid2[][50], int gri
     //Flag to determine if states of game are equal
     bool equal = true;
     //Loop through both states to check if they are not equal
-    for(int i = 0; i < gridRows; i++) {
-        for(int j = 0; j < gridCols; j++) {
+    for(int i = 0; i < gridRows; ++i) {
+        for(int j = 0; j < gridCols; ++j) {
             //If any element in grid is not equal to grid2 they are not equal
             if(grid[i][j] != grid2[i][j])
                 equal = false;
