@@ -1,7 +1,6 @@
 //COSC2947 - Programming Project 1 - Conway's Game Of Life
 //Due Date - Sept 30th 2023
-//Author - Rhy Jaunzarins
-//Student Number - 0404377
+//Author - Rhy Jaunzarins - 0404377, Kaylee Joyce - 
 
 #include <iostream>
 #include <cstdlib>
@@ -108,34 +107,34 @@ void getUserInput(int& gridRows, int& gridCols, int& simular) {
                             valid = true;
                         //If number of simulations is less than 5, print err
                         else
-                            std::cerr << "Invalid Simulation Count\n" << std::endl;
+                            std::cerr << "Invalid Simulation Count.\n" << std::endl;
                     }
                     //Input for simulations was not valid input
                     else {   
                         std::cin.clear(); //Reset error flag
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
-                        std::cerr << "Invalid Simulation Input\n" << std::endl;
+                        std::cerr << "Invalid Simulation Input.\n" << std::endl;
                     }
                 }
                 //Grid size is less than 20 or greater than 50
                 else {   
                     std::cin.clear(); //Reset error flag
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
-                    std::cerr << "Grid Size Invalid\n" << std::endl;
+                    std::cerr << "Grid Size Invalid.\n" << std::endl;
                 }
             }
             //Input for gridCols was not valid input
             else {
                 std::cin.clear(); //Reset error flag
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
-                std::cerr << "Invalid Column Input\n" << std::endl;
+                std::cerr << "Invalid Column Input.\n" << std::endl;
             }
         }
         //Input for gridRows was not valid input
         else {
             std::cin.clear(); //Reset error flag
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
-            std::cerr << "Invalid Row Input\n" << std::endl;
+            std::cerr << "Invalid Row Input.\n" << std::endl;
         }
     }
     //Newline for formatting
@@ -234,7 +233,7 @@ void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
     }
     //If lifeCount is zero after searching entire array, there are no elements alive -> exit
     if(lifeCount == 0) {
-        std::cout << "Your colony has died. Game over\n" << std::endl;
+        std::cout << "Your colony has died. Game over.\n" << std::endl;
         std::exit(0);
     }
 }
@@ -312,7 +311,7 @@ void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int g
     }
     //If states are equal, game will not change state again > print state of game and exit
     if(equal == true) {
-        std::cout << "Your colony has reached equilibrium and will not change state again\n" << std::endl;
+        std::cout << "Your colony has reached equilibrium and will not change state again.\n" << std::endl;
         std::cout << "Final state of the game: " << std::endl;
         //Print updated state of game that is equal to previous state
         printStateOfGame(grid, gridRows, gridCols);
