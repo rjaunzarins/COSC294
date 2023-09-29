@@ -176,7 +176,6 @@ void printStateOfGame(const bool grid[][50], int gridRows, int gridCols) {
         std::cout << "----";
     }
     std::cout << "-" << std::endl;
-
     //Print Gamestate
     for(int i = 0; i < gridRows; ++i) {
         for(int j = 0; j < gridCols; ++j) {            
