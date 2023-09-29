@@ -9,8 +9,8 @@
 #include <thread>
 
 void getUserInput(int& gridRows, int& gridCols, int& simulations);
-//PRECONDITION: gridRows, gridCols and simulations must be non-negative.
-//gridRows*gridCols must be greater >= 20 and <= 50. simulations must be > 5.
+//PRECONDITION: gridRows, gridCols must be > 0. simulations must be > 5.
+//gridRows*gridCols must be greater >= 20 and <= 50. 
 //POSTCONDITION: gridRows, gridCols, and simulations will be assigned to user input.
 
 void initializeBoard(bool grid[][50], int gridRows, int gridCols);
@@ -82,13 +82,13 @@ void getUserInput(int& gridRows, int& gridCols, int& simulations) {
     while(!valid) {  
         std::cout << "\nEnter the num of rows and columns (Grid must be >= 20 and <= 50): " << std::endl;
         std::cout << "Rows: ";
-        //If input for gridRows is valid, assign to gridRows and continue
-        if(std::cin >> gridRows) {
+        //If input for gridRows is valid, assign to gridRows and if gridRows > 0, continue
+        if((std::cin >> gridRows) && (gridRows > 0)) {
             //Ignore any garbage input after int for gridRows
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Columns: ";
-            //If input for gridCols is valid, assign to gridCold and continue
-            if(std::cin >> gridCols) {
+            //If input for gridCols is valid, assign to gridCold and gridCols > 0, continue
+            if((std::cin >> gridCols) && (gridCols > 0)) {
                 //Ignore any garbage input after int for gridCols
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 //If grid size is between 20 and 50, continue
