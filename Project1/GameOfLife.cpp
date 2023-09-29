@@ -65,10 +65,8 @@ constexpr int maxGridRows = 50, maxGridCols = 50;
 int main() { 
     //Create grid with maxGridRows and maxGridCols
     bool grid[maxGridRows][maxGridCols];
-
     //Declare variables for user input
     int gridRows, gridCols, simulations;            
-
     //Get user input and initialize board
     getUserInput(gridRows, gridCols, simulations);
     initializeBoard(grid, gridRows, gridCols);
