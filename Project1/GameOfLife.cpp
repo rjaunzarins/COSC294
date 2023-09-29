@@ -11,7 +11,7 @@
 void getUserInput(int& gridRows, int& gridCols, int& simulations);
 //PRECONDITION: gridRows, gridCols must be > 0. simulations must be > 5.
 //gridRows * gridCols must be greater >= 20 and <= 50. 
-//POSTCONDITION: gridRows, gridCols, and simulations will be assigned to user input.
+//POSTCONDITION: gridRows, gridCols, and simulations will be assigned as user input.
 
 void initializeBoard(bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
