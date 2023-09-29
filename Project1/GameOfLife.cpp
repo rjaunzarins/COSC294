@@ -10,24 +10,24 @@
 
 void getUserInput(int& gridRows, int& gridCols, int& simulations);
 //PRECONDITION: gridRows, gridCols must be > 0. simulations must be > 5.
-//gridRows*gridCols must be greater >= 20 and <= 50. 
+//gridRows * gridCols must be greater >= 20 and <= 50. 
 //POSTCONDITION: gridRows, gridCols, and simulations will be assigned to user input.
 
 void initializeBoard(bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows*gridCols is the size of the playable area on the board. 
+//gridRows * gridCols is the size of the playable area on the board. 
 //POSTCONDITION: each element in grid is randomly assigned a value of true or false
 //Each element within board has 20% chance of being "alive" (true), otherwise "dead" (false).
 //The initialized board will be the first generation
 
 void printStateOfGame(const bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows*gridCols is the size of the playable area on the board.  
+//gridRows * gridCols is the size of the playable area on the board.  
 //POSTCONDITION: The current state of the game will be printed to screen.
 
 void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows*gridCols is the size of the playable area on the board. 
+//gridRows * gridCols is the size of the playable area on the board. 
 //simulations must be greater than 5.
 //POSTCONDITION: for simulations number of times, the game loop will run.
 //If the checkGameState verifies the board is alive, pauseGame to delay game states being printed, 
@@ -35,7 +35,7 @@ void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations);
 
 void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows*gridCols is the size of the playable area on the board. 
+//gridRows * gridCols is the size of the playable area on the board. 
 //POSTCONDITION: Checks to see if all elements in board are dead (equal to false).
 //If all elements are dead, end game early, and print reason to screen.
 
@@ -46,7 +46,7 @@ void pauseGame(int waitMilliseconds);
 
 void simGeneration(bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows*gridCols is the size of the playable area on the board.
+//gridRows * gridCols is the size of the playable area on the board.
 //POSTCONDITION: Simulate a single generation. 
 //If any live cell has two or three neighbours it remains unchanged.
 //Any dead cell with three neighbours becomes a live cell
@@ -54,7 +54,7 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols);
 
 void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols. grid 2 is a copy of grid.
-//gridRows*gridCols is the size of the playable area on the board between 20 and 50.
+//gridRows * gridCols is the size of the playable area on the board between 20 and 50.
 //POSTCONDITION: Compare current gamestate with previous gamestate to see if they are equal
 //If gamestate are equal, colony is in an unchangeable loop and program will terminate early.
 
