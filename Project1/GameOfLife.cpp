@@ -220,7 +220,7 @@ void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations) {
 }
 
 
-//Check to see if colony has completely died off
+//Uses <cstdlib> - Check to see if colony has completely died off
 void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
     //Number of elements with life
     int lifeCount = 0;
@@ -235,12 +235,12 @@ void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
     //If lifeCount is zero after searching entire array, there are no elements alive -> exit
     if(lifeCount == 0) {
         std::cout << "Your colony has died. Game over\n" << std::endl;
-        std::exit(0);
+        exit(0);
     }
 }
 
 
-//Pause game for waitMilliseconds amount of time
+//Uses <chrono>, <thread> - Pause game for waitMilliseconds amount of time
 void pauseGame(int waitMilliseconds) {
     if(waitMilliseconds > 0) {
         //Sleep for waitMilliseconds so all generations are not instantaneously displayed
@@ -297,7 +297,7 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
 }
 
 
-//Checks to see if current generation is the same as previous generation
+//Uses <cstdlib> - Checks to see if current generation is the same as previous generation
 void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols) {
     //Flag to determine if states of game are equal
     bool equal = true;
@@ -315,6 +315,6 @@ void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int g
         std::cout << "Final state of the game: " << std::endl;
         //Print updated state of game that is equal to previous state
         printStateOfGame(grid, gridRows, gridCols);
-        std::exit(1); 
+        exit(1); 
     }
 }
