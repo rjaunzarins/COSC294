@@ -19,7 +19,7 @@ void initializeBoard(bool grid[][50], int gridRows, int gridCols);
 //PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
 //gridRows*gridCols is the size of the playable area on the board. 
 //POSTCONDITION: each element in grid is randomly assigned a value of true or false
-//Each element within board has 20% chance of being "alive" (true being assigned), otherwise false
+//Each element within board has 20% chance of being "alive" (true), otherwise false
 //The initialized board will be the first generation
 
 void printStateOfGame(const bool grid[][50], int gridRows, int gridCols);
