@@ -8,69 +8,113 @@
 #include <chrono>
 #include <thread>
 
+/*
+Retrieve user input to set size of grid and number of simulations.
+Precondition: Grid dimension values must be numeric values, where 20 <= x <= 50.
+Number of steps must be >5
+Param gridRows: Number of rows  of game board
+Param gridCols: Number of columns of game board
+Param simulations: Number of simulations
+Postcondition: The number of rows, columns, and simulation values are set.
+*/
 void getUserInput(int& gridRows, int& gridCols, int& simulations);
-//PRECONDITION: gridRows, gridCols must be > 0. simulations must be > 5.
-//gridRows * gridCols must be greater >= 20 and <= 50. 
-//POSTCONDITION: gridRows, gridCols, and simulations will be assigned as user input.
 
+/*
+Initialize the board at random, where each element is assigned true or false.
+Precondition: Board dimensions values must have been previously set by getUserInput()
+Param grid: 2D bool array
+Param gridRows: Number of rows of game board
+Param gridColsL Number of columns of game board
+Postcondition: The board is initialized with first simulation and printed to screen.
+*/
 void initializeBoard(bool grid[][50], int gridRows, int gridCols);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows * gridCols is the size of the playable area on the board. 
-//POSTCONDITION: each element in grid is randomly assigned a value of true or false
-//Each element within board has 20% chance of being "alive" (true), otherwise "dead" (false).
-//The initialized board will be the first generation
 
+/*
+Print the current state of the game.
+Precondition: Grid dimensions and grid must have been set by getUserParams() and initializeBoard().
+Param grid: 2D bool array, which cannot be modified by the function
+Param gridRows: Number of rows of game board
+Param gridCols: Number of columns of game board
+Postcondition: Current state of all cells is printed to screen.
+*/
 void printStateOfGame(const bool grid[][50], int gridRows, int gridCols);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows * gridCols is the size of the playable area on the board.  
-//POSTCONDITION: The current state of the game will be printed to screen.
 
+/*
+Checks gamestate, simulates generation and prints current generation to screen.
+Precondition: simulations must be set by getUserInput().
+Param grid: 2D bool array
+Param gridRows: Number of rows of game board
+Param gridCols: Number of columns of game board
+Param simulations: Number of simulations
+Postcondition: Prints current state of game to screen. If all cells are dead game is terminated. 
+If gamestate is equal to previous gamestate, game is terminated.
+*/
 void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows * gridCols is the size of the playable area on the board. 
-//simulations must be greater than 5.
-//POSTCONDITION: for simulations number of times, the game loop will run.
-//If the checkGameState verifies the board is alive, pauseGame to delay game states being printed, 
-//simGeneration, and print current game state to screen.
 
+/*
+Checks if all elements in board are alive. If all elements are dead, terminate game.
+Precondition: Game must be initialized.
+Param grid: 2D bool array
+Param gridRows: Number of rows of game board
+Param gridCols: Number of columns of game board
+Postcondition: If all elements are dead, terminate game and print reason to screen.
+*/
 void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows * gridCols is the size of the playable area on the board. 
-//POSTCONDITION: Checks to see if all elements in board are dead (equal to false).
-//If all elements are dead, end game early, and print reason to screen.
 
+/*
+Pauses game for a specified number of milliseconds, for user experience.
+Precondition: Game must be initialized and gameLoop() running.
+Param milliSeconds: Number of milliseconds
+Postcondition: Game paused for specified number of milliseconds.
+*/
 void pauseGame(int waitMilliseconds);
-//PRECONDITION: waitMilliseconds is a time in milliseconds greater than 0.
-//POSTCONDITION: Pause game for waitMilliseconds amount of time
-//Game is paused to delay each generation being printed to screen
 
+/*
+Simulate a single generation, computing the life and/or death of all cells.
+Precondition: Board initialization must have been completed by initializeBoard()
+Param grid: 2D bool array
+Param gridRows: Number of rows of game board
+Param gridCols: Number of columns of game board
+Postcondition: A single generation has been simulated.
+*/
 void simGeneration(bool grid[][50], int gridRows, int gridCols);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols.
-//gridRows * gridCols is the size of the playable area on the board.
-//POSTCONDITION: Simulate a single generation. 
-//If any live cell has two or three neighbours it remains unchanged.
-//Any dead cell with three neighbours becomes a live cell
-//All other live cells die
 
+/*
+Compares current generation to previous generation, if states are equal 
+(meaning in an unchangable loop), terminate game.
+Precondition: At least two generations must have been simulated.
+Param grid: 2D bool array
+Param grid2: 2D bool array
+Param gridRows: Number of rows of game board
+Param gridCols: Number of columns of game board
+Postcondition: If gamestates are equal, terminate game.
+*/
 void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols);
-//PRECONDITION: grid is a bool array of size maxGridRows x maxGridCols. grid 2 is a copy of grid.
-//gridRows * gridCols is the size of the playable area on the board between 20 and 50.
-//POSTCONDITION: Compare current gamestate with previous gamestate to see if they are equal
-//If gamestate are equal, colony is in an unchangeable loop and program will terminate early.
+
+/*
+Prompts user to play again.
+Precondition: At least 1 game must have been played.
+Postcondition: Triggers new game if user answers 'y', otherwise terminates game.
+*/
+char playAgain();
 
 //Maximum size for rows and cols
 constexpr int maxGridRows = 50, maxGridCols = 50;
 
 int main() { 
-    //Create grid with maxGridRows and maxGridCols
-    bool grid[maxGridRows][maxGridCols];
-    //Declare variables for user input
-    int gridRows, gridCols, simulations;            
-    //Get user input and initialize board
-    getUserInput(gridRows, gridCols, simulations);
-    initializeBoard(grid, gridRows, gridCols);
-    //Run game loop
-    gameLoop(grid, gridRows, gridCols, simulations);
+    char again = 'y';
+    while(again) {
+        //Create grid with maxGridRows and maxGridCols
+        bool grid[maxGridRows][maxGridCols];
+        //Declare variables for user input
+        int gridRows, gridCols, simulations;            
+        //Get user input and initialize board
+        getUserInput(gridRows, gridCols, simulations);
+        initializeBoard(grid, gridRows, gridCols);
+        //Run game loop
+        gameLoop(grid, gridRows, gridCols, simulations);
+        again = playAgain();
+    }
 }
 
 
@@ -106,35 +150,34 @@ void getUserInput(int& gridRows, int& gridCols, int& simulations) {
                         else
                             std::cerr << "Invalid Simulation Count.\n" << std::endl;
                     }
-                    //Input for simulations was not valid input
+                    //Input for simulations was not valid input, reset error flag and skip bad input
                     else {   
-                        std::cin.clear(); //Reset error flag
-                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
+                        std::cin.clear(); 
+                        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         std::cerr << "Invalid Simulation Input.\n" << std::endl;
                     }
                 }
-                //Grid size is less than 20 or greater than 50
+                //Grid size is less than 20 or greater than 50, reset error flag and skip bad input
                 else {   
-                    std::cin.clear(); //Reset error flag
-                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
+                    std::cin.clear(); 
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
                     std::cerr << "Grid Size Invalid.\n" << std::endl;
                 }
             }
-            //Input for gridCols was not valid input
+            //Input for gridCols was not valid input, reset error flag and skip bad input
             else {
-                std::cin.clear(); //Reset error flag
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
+                std::cin.clear(); 
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
                 std::cerr << "Invalid Column Input.\n" << std::endl;
             }
         }
-        //Input for gridRows was not valid input
+        //Input for gridRows was not valid input, reset error flag and skip bad input
         else {
-            std::cin.clear(); //Reset error flag
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); //Skip bad input
+            std::cin.clear(); 
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
             std::cerr << "Invalid Row Input.\n" << std::endl;
         }
     }
-    //Newline for formatting
     std::cout << std::endl;
 }
 
@@ -314,4 +357,17 @@ void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int g
         printStateOfGame(grid, gridRows, gridCols);
         std::exit(1); 
     }
+}
+
+
+//Ask if user wants to play again
+char playAgain() {
+    char again;
+    std::cout << "Play again?: ";
+    std::cin >> again;
+    if(again == 'y' || again == 'Y') {
+        return 'y';
+    }
+    else
+        return 'n';
 }
