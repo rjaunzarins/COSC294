@@ -153,13 +153,11 @@ void initializeBoard(bool grid[][50], int gridRows, int gridCols) {
             //Random number between 1 and 100
             int number = rand()%100 + 1;
             //If number is between 1 and 20 (20%) cell is alive
-            if(number <= 20) {
+            if(number <= 20) 
                 grid[i][j] = true;
-            }
             //If number is between 21 and 100 (80%) cell is not alive
-            else {   
+            else 
                 grid[i][j] = false;
-            }
         }
     }
     //Display header for first generation
@@ -172,9 +170,8 @@ void initializeBoard(bool grid[][50], int gridRows, int gridCols) {
 //Print the current state of the game
 void printStateOfGame(const bool grid[][50], int gridRows, int gridCols) {
     //Draw horizontal line at top of gamestate
-    for(int i = 0; i < gridCols; ++i) {
+    for(int i = 0; i < gridCols; ++i) 
         std::cout << "----";
-    }
     std::cout << "-" << std::endl;
     //Print Gamestate
     for(int i = 0; i < gridRows; ++i) {
@@ -191,9 +188,8 @@ void printStateOfGame(const bool grid[][50], int gridRows, int gridCols) {
                     std::cout << "|   ";
         }
         //Draw horizontal lines for each row
-        for(int i = 0; i < gridCols; ++i) {
+        for(int i = 0; i < gridCols; ++i) 
             std::cout << "----";
-        }
         std::cout << "-" << std::endl;
     }
     //Newline for formatting
@@ -260,9 +256,8 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
     bool grid2[maxGridRows][maxGridCols];  
     //Copy grid to grid2 so we can search through grid2 and update grid
     for(int i = 0; i < gridRows; ++i) {
-        for(int j = 0; j < gridCols; ++j) {
+        for(int j = 0; j < gridCols; ++j) 
             grid2[i][j] = grid[i][j];
-        }
     }
     //Iterate through grid2 to search for alive neighbors
     for(int i = 0; i < gridRows; ++i) {
@@ -275,9 +270,8 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
                     //If valid element in grid2 and not grid2[i][j], continue
                     if(k >= 0 && k < gridRows && l >= 0 && l < gridCols && !(k == i && l == j)){
                         //If valid element is equal to 1, increase count by 1
-                        if(grid2[k][l] == true) {
+                        if(grid2[k][l] == true) 
                             ++count;
-                        }
                     }
                 }
             }
@@ -285,18 +279,16 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
             //If Current Cell Alive  
             if(grid2[i][j] == true) { 
                 //If neighbor count is != 2 || !=3 --> cell becomes dead
-                if(count != 2 && count != 3) {
+                if(count != 2 && count != 3)
                     //Cell dies
                     grid[i][j] = false;
-                }
             }
             //If Current Cell Dead  
             else { 
                 //if neighbor count = 3 --> cell becomes alive
-                if(count == 3) {
+                if(count == 3)
                     //Cell becomes alive
                     grid[i][j] = true;
-                }
             } 
         } 
     }
