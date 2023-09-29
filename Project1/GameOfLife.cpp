@@ -140,7 +140,7 @@ void getUserInput(int& gridRows, int& gridCols, int& simulations) {
 }
 
 
-//Initializes board at random
+//Uses <cstdlib>, <ctime> - Initializes board at random
 void initializeBoard(bool grid[][50], int gridRows, int gridCols) {
     //Set seed - pass current time
     srand(time(0)); 
