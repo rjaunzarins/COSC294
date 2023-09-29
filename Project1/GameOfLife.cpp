@@ -1,6 +1,6 @@
 //COSC2947 - Programming Project 1 - Conway's Game Of Life
 //Due Date - Sept 30th 2023
-//Author - Rhy Jaunzarins - 0404377, Kaylee Joyce - 
+//Author - Rhy Jaunzarins - 0404377, Kaylee Joyce - 0383068
 
 #include <iostream>
 #include <cstdlib>
