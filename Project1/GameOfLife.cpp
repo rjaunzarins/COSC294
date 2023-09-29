@@ -76,7 +76,7 @@ int main() {
 
 
 //Get the size of the grid and number of simulations from the user
-void getUserInput(int& gridRows, int& gridCols, int& simular) {
+void getUserInput(int& gridRows, int& gridCols, int& simulations) {
     //Set flag to false
     bool valid = false;
     //While flag is not valid
@@ -97,11 +97,11 @@ void getUserInput(int& gridRows, int& gridCols, int& simular) {
                     std::cout << "Enter the number of simulations (Must be > 5): " << std::endl;
                     std::cout << "Simulations: ";
                     //If input for number of simulations is valid, assign to simulations and continue
-                    if(std::cin >> simular) {
+                    if(std::cin >> simulations) {
                         //Ignore any garbage input after int for simulations
                         std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                         //If number of simulations is greater than 5, continue
-                        if(simular > 5)
+                        if(simulations > 5)
                             valid = true;
                         //If number of simulations is less than 5, print err
                         else
