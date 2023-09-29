@@ -235,7 +235,7 @@ void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
     //If lifeCount is zero after searching entire array, there are no elements alive -> exit
     if(lifeCount == 0) {
         std::cout << "Your colony has died. Game over\n" << std::endl;
-        exit(0);
+        std::exit(0);
     }
 }
 
@@ -315,6 +315,6 @@ void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int g
         std::cout << "Final state of the game: " << std::endl;
         //Print updated state of game that is equal to previous state
         printStateOfGame(grid, gridRows, gridCols);
-        exit(1); 
+        std::exit(1); 
     }
 }
