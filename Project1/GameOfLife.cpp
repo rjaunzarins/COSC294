@@ -108,15 +108,13 @@ const int pauseMilliseconds = 350;                                              
 
 
 int main() { 
-    bool playChoice = true;
-    while(playChoice) {
+    do {
         bool grid[maxGridRows][maxGridCols];                                                                //Create grid with maxGridRows and maxGridCols
         int gridRows, gridCols, simulations;                                                                //Declare variables for user input
         getUserInput(gridRows, gridCols, simulations);                                                      //Get user input
         initializeBoard(grid, gridRows, gridCols);                                                          //Initialize board
         gameLoop(grid, gridRows, gridCols, simulations);                                                    //Run game loop
-        playChoice = playAgain();
-    }
+    } while(playAgain());                                                                                   //Run while playAgain() returns true
 }
 
 
