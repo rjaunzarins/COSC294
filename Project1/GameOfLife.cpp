@@ -17,7 +17,7 @@ Authors: Rhy Jaunzarins - 0404377, Kaylee Joyce - 0383068
 Retrieve user input to set size of grid and number of simulations.
 Precondition: Grid dimension values must be numeric values, where 20 <= x <= 50.
 Number of steps must be >5
-Param int&: Number of rows  of game board
+Param int&: Number of rows of game board
 Param int&: Number of columns of game board
 Param int&: Number of simulations
 Postcondition: The number of rows, columns, and simulation values are set.
@@ -25,18 +25,18 @@ Postcondition: The number of rows, columns, and simulation values are set.
 void getUserInput(int&, int&, int&);
 
 /*
-Initialize the board at random, where each element is assigned true or false.
+Initialize the board at random, where each element has a 20% chance of being alive (true).
 Precondition: Board dimensions values must have been previously set by getUserInput()
 Param bool [][]: 2D bool array
 Param int: Number of rows of game board
 Param int: Number of columns of game board
-Postcondition: The board is initialized with first simulation and printed to screen.
+Postcondition: The board is initialized with the first simulation and printed to screen.
 */
 void initializeBoard(bool [][50], int, int);
 
 /*
 Print the current state of the game.
-Precondition: Grid dimensions and grid must have been set by getUserParams() and initializeBoard().
+Precondition: initializeBoard() must have successfully executed.
 Param const bool [][]: 2D bool array, which cannot be modified by the function
 Param int: Number of rows of game board
 Param int: Number of columns of game board
@@ -45,34 +45,33 @@ Postcondition: Current state of all cells is printed to screen.
 void printStateOfGame(const bool [][50], int, int);
 
 /*
-Checks gamestate, simulates generation and prints current generation to screen.
-Precondition: simulations must be set by getUserInput().
+Checks gamestate, simulates generation, and prints gamestate to screen.
+Precondition: initializeBoard() must have successfully executed.
 Param bool [][]: 2D bool array
 Param int: Number of rows of game board
 Param int: Number of columns of game board
 Param int: Number of simulations
-Postcondition: Prints current state of game to screen. If all cells are dead game is terminated. 
-If gamestate is equal to previous gamestate, game is terminated.
+Postcondition: Prints current state of game to screen. If all cells are dead, or current
+gamestate is equal to previous gamestate, game is ended. 
 */
 void gameLoop(bool [][50], int, int, int);
 
 /*
-Checks if all elements in board are alive. If all elements are dead, terminate game.
+Checks if any elements on board are alive. If all elements are dead, ends current game.
 Precondition: Game must be initialized.
 Param bool [][]: 2D bool array
 Param int: Number of rows of game board
 Param int: Number of columns of game board
-Postcondition: If all elements are dead, terminate game and print reason to screen.
+Return: Returns wheteher or not any elements are alive.
 */
 bool checkGameStateAlive(bool [][50], int, int);
 
 /*
 Pauses game for a specified number of milliseconds, for user experience.
 Precondition: Game must be initialized and gameLoop() running.
-Param int: Number of milliseconds
 Postcondition: Game paused for specified number of milliseconds.
 */
-void pauseGame(int);
+void pauseGame();
 
 /*
 Simulate a single generation, computing the life and/or death of all cells.
@@ -80,31 +79,33 @@ Precondition: Board initialization must have been completed by initializeBoard()
 Param bool [][]: 2D bool array
 Param int: Number of rows of game board
 Param int: Number of columns of game board
-Postcondition: A single generation has been simulated.
+Return: Return validity of whether gamestate is valid.
 */
 bool simGeneration(bool [][50], int, int);
 
 /*
-Compares current generation to previous generation, if states are equal 
-(meaning in an unchangable loop), terminate game.
+Compares current generation to previous generation. If states are equal 
+(meaning in an unchangable loop), returns true.
 Precondition: At least two generations must have been simulated.
 Param const bool [][]: 2D bool array - current gamestate
 Param const bool [][]: 2D bool array - previous gamestate
 Param int: Number of rows of game board
 Param int: Number of columns of game board
-Postcondition: If gamestates are equal, terminate game.
+Return: Returns validity of equal gamestates.
 */
 bool checkGamestatesEqual(const bool [][50], const bool [][50], int, int);
 
 /*
-Prompts user to play again.
+Prompts user to play again once a game has ended.
 Precondition: At least 1 game must have been played.
-Postcondition: Triggers new game if user answers 'y', otherwise terminate game.
+Return: Returns true if user chooses to play again.
 */
 bool playAgain();
 
+
 constexpr int maxGridRows = 50, maxGridCols = 50;                                                           //Maximum size for rows and cols
 const int pauseMilliseconds = 350;                                                                          //Global for visibility - Amount of milliseconds to pause game loop
+
 
 int main() { 
     bool playChoice = true;
@@ -206,7 +207,7 @@ void printStateOfGame(const bool grid[][50], int gridRows, int gridCols) {
 void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations) {
     int currentGeneration = 1;                                                                              //Set generation at current generation
     while(currentGeneration < simulations) {                                                                //Run for specified number of simulations                                                                                   
-        pauseGame(pauseMilliseconds);                                                                       //Pause game for user experience/output aesthetics
+        pauseGame();                                                                                        //Pause game for user experience/output aesthetics
         if(!simGeneration(grid, gridRows, gridCols))                                                        //If simGeneration returns false
             return;
         ++currentGeneration;                                                                                //Iterate generation before number is printed to screen
@@ -232,7 +233,7 @@ bool checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {         
 }
 
 
-void pauseGame(int pauseMilliseconds) {                                                                     //Uses <chrono>, <thread>
+void pauseGame() {                                                                                          //Uses <chrono>, <thread>
     if(pauseMilliseconds > 0) {                                                                             //If pauseMilliseconds is valid time
         std::chrono::milliseconds dura(pauseMilliseconds);                                                  //Sleep so all generations are not instantaneously displayed
         std::this_thread::sleep_for(dura);
