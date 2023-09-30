@@ -59,7 +59,7 @@ Param gridRows: Number of rows of game board
 Param gridCols: Number of columns of game board
 Postcondition: If all elements are dead, terminate game and print reason to screen.
 */
-void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols);
+bool checkGameStateAlive(bool grid[][50], int gridRows, int gridCols);
 
 /*
 Pauses game for a specified number of milliseconds, for user experience.
@@ -77,7 +77,7 @@ Param gridRows: Number of rows of game board
 Param gridCols: Number of columns of game board
 Postcondition: A single generation has been simulated.
 */
-void simGeneration(bool grid[][50], int gridRows, int gridCols);
+bool simGeneration(bool grid[][50], int gridRows, int gridCols);
 
 /*
 Compares current generation to previous generation, if states are equal 
@@ -89,20 +89,20 @@ Param gridRows: Number of rows of game board
 Param gridCols: Number of columns of game board
 Postcondition: If gamestates are equal, terminate game.
 */
-void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols);
+bool compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols);
 
 /*
 Prompts user to play again.
 Precondition: At least 1 game must have been played.
 Postcondition: Triggers new game if user answers 'y', otherwise terminates game.
 */
-char playAgain();
+bool playAgain();
 
 //Maximum size for rows and cols
 constexpr int maxGridRows = 50, maxGridCols = 50;
 
 int main() { 
-    char again = 'y';
+    bool again = true;
     while(again) {
         //Create grid with maxGridRows and maxGridCols
         bool grid[maxGridRows][maxGridCols];
@@ -124,17 +124,18 @@ void getUserInput(int& gridRows, int& gridCols, int& simulations) {
     bool valid = false;
     //While flag is not valid
     while(!valid) {  
-        std::cout << "\nEnter the num of rows and columns (Grid must be >= 20 and <= 50): " << std::endl;
+        std::cout << "\nEnter the num of rows and columns to make game board\n" 
+                  << "(Rows * columns must be >= 20 and <= 50) " << std::endl;
         std::cout << "Rows: ";
         //If input for gridRows is valid, assign to gridRows and if gridRows > 0, continue
         if((std::cin >> gridRows) && (gridRows > 0)) {
             //Ignore any garbage input after int for gridRows
-            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Columns: ";
             //If input for gridCols is valid, assign to gridCold and gridCols > 0, continue
             if((std::cin >> gridCols) && (gridCols > 0)) {
                 //Ignore any garbage input after int for gridCols
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                //std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 //If grid size is between 20 and 50, continue
                 if((gridRows * gridCols >= 20) && (gridRows*gridCols <= 50)) {
                     std::cout << "Enter the number of simulations (Must be > 5): " << std::endl;
@@ -215,7 +216,7 @@ void printStateOfGame(const bool grid[][50], int gridRows, int gridCols) {
     //Print Gamestate
     for(int i = 0; i < gridRows; ++i) {
         for(int j = 0; j < gridCols; ++j) {            
-            if(grid[i][j] == true)
+            if(grid[i][j])
                 if(j == gridCols - 1)
                     std::cout << "| * |" << std::endl;
                 else
@@ -245,11 +246,13 @@ void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations) {
     //Game Loop - run for specified number of simulations
     while(currentGeneration < simulations) {
         //Check to see if colony has died off
-        checkGameStateAlive(grid, gridRows, gridCols);
+        if(!checkGameStateAlive(grid, gridRows, gridCols))
+            return;
         //Pause for set amount of time (350ms)
         pauseGame(waitMilliseconds);
         //Simulate generation
-        simGeneration(grid, gridRows, gridCols);
+        if(!simGeneration(grid, gridRows, gridCols))
+            return;
         //Iterate generation before number is printed to screen
         ++currentGeneration;
         //Print current generation header and state of game
@@ -260,22 +263,23 @@ void gameLoop(bool grid[][50], int gridRows, int gridCols, int simulations) {
 
 
 //Uses <cstdlib> - Check to see if colony has completely died off
-void checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
+bool checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {
     //Number of elements with life
     int lifeCount = 0;
     //Loop through grid to check for alive elements
     for(int i = 0; i < gridRows; ++i) {
         for(int j = 0; j < gridCols; ++j) {
             //If element is 1 (alive), increment lifeCount
-            if(grid[i][j] == true)
+            if(grid[i][j])
                 ++lifeCount;
         }
     }
     //If lifeCount is zero after searching entire array, there are no elements alive -> exit
     if(lifeCount == 0) {
         std::cout << "Your colony has died. Game over.\n" << std::endl;
-        std::exit(0);
+        return false;
     }
+    return true;
 }
 
 
@@ -291,7 +295,7 @@ void pauseGame(int waitMilliseconds) {
 
 
 //Simulate a single generation
-void simGeneration(bool grid[][50], int gridRows, int gridCols) {
+bool simGeneration(bool grid[][50], int gridRows, int gridCols) {
     //Create second board so changes can be made on first without changing result
     bool grid2[maxGridRows][maxGridCols];  
     //Copy grid to grid2 so we can search through grid2 and update grid
@@ -310,14 +314,14 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
                     //If valid element in grid2 and not grid2[i][j], continue
                     if(k >= 0 && k < gridRows && l >= 0 && l < gridCols && !(k == i && l == j)){
                         //If valid element is equal to 1, increase count by 1
-                        if(grid2[k][l] == true) 
+                        if(grid2[k][l]) 
                             ++count;
                     }
                 }
             }
             //Execute change to grid based on neighbor count of grid2
             //If Current Cell Alive  
-            if(grid2[i][j] == true) { 
+            if(grid2[i][j]) { 
                 //If neighbor count is != 2 || !=3 --> cell becomes dead
                 if(count != 2 && count != 3)
                     //Cell dies
@@ -333,12 +337,14 @@ void simGeneration(bool grid[][50], int gridRows, int gridCols) {
         } 
     }
     //Compare gamestates - grid and grid2 - if equal, gamestate will not change again
-    compareGamestatesEqual(grid, grid2, gridRows, gridCols);
+    if(compareGamestatesEqual(grid, grid2, gridRows, gridCols))
+        return false;
+    return true;
 }
 
 
 //Uses <cstdlib> - Checks to see if current generation is the same as previous generation
-void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols) {
+bool compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gridRows, int gridCols) {
     //Flag to determine if states of game are equal
     bool equal = true;
     //Loop through both states to check if they are not equal
@@ -355,19 +361,19 @@ void compareGamestatesEqual(const bool grid[][50], const bool grid2[][50], int g
         std::cout << "Final state of the game: " << std::endl;
         //Print updated state of game that is equal to previous state
         printStateOfGame(grid, gridRows, gridCols);
-        std::exit(1); 
+        return true;
     }
+    return false;
 }
 
 
 //Ask if user wants to play again
-char playAgain() {
+bool playAgain() {
     char again;
     std::cout << "Play again?: ";
     std::cin >> again;
     if(again == 'y' || again == 'Y') {
-        return 'y';
+        return true;
     }
-    else
-        return 'n';
+    return false;
 }
