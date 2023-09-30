@@ -250,21 +250,21 @@ bool simGeneration(bool grid[][50], int gridRows, int gridCols) {               
     }
     for(int i = 0; i < gridRows; ++i) {                                                                     //Iterate through grid2 to search for live neighbors
         for(int j = 0; j < gridCols; ++j) {
-            int count = 0;                                                                                  //Declare count of neighbors for grid2[i][j]
+            int liveNeighbours = 0;                                                                         //Declare count of neighbors for grid2[i][j]
             for(int k = i-1; k <= i+1; ++k) {                                                               //Count live neighbors around grid2[i][j]
                 for(int l = j-1; l <= j+1; ++l) {
                     if(k >= 0 && k < gridRows && l >= 0 && l < gridCols && !(k == i && l == j)){            //If valid element in grid2 and not grid[i][j]
-                        if(grid2[k][l])                                                                     //If valid element is true, increment count
-                            ++count;
+                        if(grid2[k][l])                                                                     //If valid element is true, increment liveNeighbours
+                            ++liveNeighbours;
                     }
                 }
             }
             if(grid2[i][j]) {                                                                               //If current cell alive  
-                if(count != 2 && count != 3)                                                                //If neighbor count is != 2 || !=3
+                if(liveNeighbours != 2 && liveNeighbours != 3)                                              //If liveNeighbours is != 2 || !=3
                     grid[i][j] = false;                                                                     //Cell dies
             }  
             else {                                                                                          //If current cell dead
-                if(count == 3)                                                                              //if neighbor count = 3
+                if(liveNeighbours == 3)                                                                              //if liveNeighbours = 3
                     grid[i][j] = true;                                                                      //Cell becomes alive
             } 
         } 
@@ -294,10 +294,10 @@ bool checkGamestatesEqual(const bool grid[][50], const bool grid2[][50], int gri
 
 
 bool playAgain() {
-    char again;
+    char playChoice;
     std::cout << "Play again?: ";
-    std::cin >> again;
-    if(again == 'y' || again == 'Y') {
+    std::cin >> playChoice;
+    if(playChoice == 'y' || playChoice == 'Y') {
         return true;                                                                                        //User wants to play again
     }
     return false;                                                                                           //User does not want to play again
