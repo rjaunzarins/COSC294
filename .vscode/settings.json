@@ -67,5 +67,6 @@
         "fstream": "cpp",
         "stack": "cpp",
         "thread": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
