@@ -4,10 +4,10 @@
 class Date {
     public:
         Date(int year = 2000, int month = 1, int day = 1);
-        int getYear();
-        int getMonth();
-        int getDay();
-        void printDate();
+        int getYear() const;
+        int getMonth() const;
+        int getDay() const;
+        void printDate()const;
     private:
         int year;
         int month;
@@ -19,10 +19,25 @@ class Date {
 //FUNCTION DECLARATIONS ----------------------------------------
 void getDateInput(int& year, int& month, int& day);
 
+//Const
+void testFunctionConst(const Date &date);
+//Non-Const
+void testFunctionNonConst(Date &date);
+
 
 int main() {
-    Date d1(1900,1,1);
-    d1.printDate();
+    //Creating const object using constructor
+    const Date d1(1900,1,1);
+    //Using const accessors
+    d1.getDay(); d1.getMonth(); d1.getDay(); d1.printDate();
+    //Creating non-const object
+    Date d2(2000,2,2);
+    //using const accessors
+    d2.getDay(); d2.getMonth(); d2.getDay(); d2.printDate();
+    //Using testFunctionConst by passing the creation of a Date with literals
+    testFunctionConst(Date{1999,9,9});
+    //Using testFunctionNonConst by passing the creation of a Date with literals
+    //testFunctionNonConst(Date{1999,10,10}); //Literals cannot be passed by non-const reference
 }
 
 
@@ -101,19 +116,19 @@ void Date::validateDate() {
     }
 }
 
-int Date::getYear() {
+int Date::getYear() const{
     return year;
 }
 
-int Date::getMonth() {
+int Date::getMonth() const{
     return month;
 }
 
-int Date::getDay() {
+int Date::getDay() const{
     return day;
 }
 
-void Date::printDate() {
+void Date::printDate() const{
     if(month > 10) {
         if(day > 10) {
             std::cout << year << "-" << month << "-" << day << std::endl;
@@ -130,4 +145,46 @@ void Date::printDate() {
             std::cout << year << "-0" << month << "-0" << day << std::endl;
         }
     }
+}
+
+//FUNCTIONS ------------------------------------------------
+void getDateInput(int& year, int& month, int& day){
+    bool inputInvalid = true;
+    while(inputInvalid) {    
+        std::cout << "Enter year: ";
+        if(std::cin >> year) {
+            std::cout << "Enter month: ";
+            if(std::cin >> month) {
+                std::cout << "Enter day: ";
+                if(std::cin >> day) {
+                    inputInvalid = false;
+                }
+                else {
+                    std::cin.clear();
+                    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                    std::cout << "Invalid day input" << std::endl;
+                }
+            }
+            else {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Invalid month input" << std::endl;
+            }
+        }
+        else {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Invalid year input" << std::endl;
+        }
+    }
+}
+
+void testFunctionConst(const Date &date) {
+    std::cout << "Const Date Reference" << std::endl;
+    date.printDate();
+}
+
+void testFunctionNonConst(Date &date) {
+    std::cout << "Non-Const Date Reference" << std::endl;
+    date.printDate();
 }
