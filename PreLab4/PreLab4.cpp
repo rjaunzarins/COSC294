@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 
-//CLASS DATE
+//CLASS DATE ------------------------------------------------
 class Date {
     public:
         Date(int year = 2000, int month = 1, int day = 1);
@@ -16,7 +16,7 @@ class Date {
         void validateDate();
 };
 
-//CLASS PERSON
+//CLASS PERSON ------------------------------------------------
 class Person {
     public:
         //CONSTRUCTOR
@@ -33,7 +33,7 @@ class Person {
         Date birthday;
 };
 
-//FUNCTIONS
+//FUNCTION DECLARATIONS ----------------------------------------
 void getDateInput(int& year, int& month, int& day);
 
 void getNameInput(std::string& firstName, std::string& lastName);
@@ -57,7 +57,7 @@ int main() {
     //std::cout << __cplusplus << std::endl;
 }
 
-//DATE - Constructor
+//DATE -------------------------------------------------
 Date::Date(int year, int month, int day) : year(year), month(month), day(day) {
     validateDate();
 }
@@ -163,7 +163,7 @@ void Date::printDate() {
     }
 }
 
-
+//PERSON ------------------------------------------------
 //PERSON - CONSTUCTOR
 Person::Person(std::string firstName, std::string lastName, int year, int month, int day) : firstName(firstName), lastName(lastName), birthday(year, month, day) { }
 
@@ -189,7 +189,7 @@ void Person::printPerson() {
 }
 
 
-//FUNCTIONS
+//FUNCTIONS ------------------------------------------------
 void getDateInput(int& year, int& month, int& day){
     bool inputInvalid = true;
     while(inputInvalid) {    
