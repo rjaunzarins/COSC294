@@ -36,7 +36,7 @@ class BankAccount {
         //Checks that arguments are both nonnegative or both nonpositive
         void setBalance(int dollars, int cents);
 
-        //If newRate is nonnegative, it becomes the new rate. Otherwise, about program
+        //If newRate is nonnegative, it becomes the new rate. Otherwise, abort program
         void setRate(double newRate);
     
     private:
@@ -83,6 +83,10 @@ BankAccount::BankAccount(int dollars, int cents, double rate) {
     setRate(rate);
 }
 
+BankAccount::BankAccount(int dollars, double rate) : accountDollars(dollars), accountCents(0) {
+    setRate(rate);
+}
+
 BankAccount::BankAccount() : accountDollars(0), accountCents(0), rate(0.0) {}
 
 void BankAccount::update() {
@@ -105,6 +109,78 @@ void BankAccount::input() {
 }
 
 //Uses iostream and cstdlib
-void BankAccount::input() {
+void BankAccount::output() {
+    int absDollars = abs(accountDollars);
+    int absCents = abs(accountCents);
+    std::cout << "Account balance: $";
+    if(accountDollars > 0)
+        std::cout << "-";
+    std::cout << absDollars;
+    if(absCents >= 10)
+        std::cout << "." << absCents << std::endl;
+    else    
+        std::cout << "." << '0' << absCents << std::endl;
+    std::cout << "Rate: " << rate << "%\n";
+}
 
+double BankAccount::getBalance() {
+    return (accountDollars + accountCents * 0.01);
+}
+
+int BankAccount::getDollars() {
+    return accountDollars;
+}
+
+int BankAccount::getCents() {
+    return accountCents;
+}
+
+double BankAccount::getRate() {
+    return rate;
+}
+
+void BankAccount::setBalance(double balance) {
+    accountDollars = dollarsPart(balance);
+    accountCents = centsPart(balance);
+}
+
+//Uses cstdlib
+void BankAccount::setBalance(int dollars, int cents) {
+    if((dollars < 0 && cents > 0) || (dollars > 0 && cents < 0)) {
+        std::cout << "Inconsistent account date.\n";
+        std::exit(1);
+    } 
+}
+
+//Uses cstdlib
+void BankAccount::setRate(double newRate) {
+    if(newRate >= 0.0)
+        rate = newRate;
+    else {
+        std::cout << "Cannot have a negative interest rate.\n";
+        std::exit(1);
+    }
+}
+
+int BankAccount::dollarsPart(double amount) {
+    return static_cast<int>(amount);
+}
+
+//Uses cmath
+int BankAccount::centsPart(double amount) {
+    double doubleCents = amount * 100; 
+    int intCents = (round(fabs(doubleCents))) %100;
+    //Can misbehave with negative values, convert to +ve
+    if(amount < 0)
+        intCents = -intCents;
+    return intCents;
+}
+
+//Uses cmath
+int BankAccount::round(double number) {
+    return static_cast<int>(floor(number + 0.5));
+}
+
+double BankAccount::fraction(double percent) {
+    return (percent/100.);
 }
