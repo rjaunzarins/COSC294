@@ -1,16 +1,21 @@
 #include <iostream>
 
+
 class Wheel {
     public:
         Wheel(int rim = 0, int tire = 0);
         std::string getRimType();
         std::string getTireType();
+        int getRimValue();
+        int getTireValue();
         void printRim();
     private:
         int rimType;
         int tireType;
         void validateWheel();
-};
+}; //End class
+
+
 
 class Car {
     public:
@@ -24,10 +29,13 @@ class Car {
         std::string manufact;
         std::string model;
         Wheel wheels;
-};
+}; //End class
 
 
+
+//Set precision for doubles output
 void setPrecision();
+
 
 int main() {
         Car car1(100000.00, "Ford", "Fiesta", 2, 2);
@@ -40,6 +48,8 @@ int main() {
 }
 
 
+
+//------------------------- Functions --------------------------//
 void setPrecision() {
     std::cout.setf(std::ios::fixed);
     std::cout.setf(std::ios::showpoint);
@@ -47,33 +57,28 @@ void setPrecision() {
 }
 
 
+
+//------------------------- CAR --------------------------//
 // After : youre saying set field (price) as this (priceValue) argument passed to parameter
 Car::Car(double priceValue, std::string manufactName, std::string modelName, int rim, int tire) 
                             : price(priceValue), manufact(manufactName), model(modelName), wheels(rim, tire) {}
 
-double Car::getPrice() {
-    return price;
-}
+double Car::getPrice() { return price; }
 
-std::string Car::getManufact() {
-    return manufact;
-}
+std::string Car::getManufact() { return manufact; }
 
-std::string Car::getModel() {
-    return model;
-}
+std::string Car::getModel() { return model; }
 
 void Car::printCar() {
-    std::cout << "Manufacturer: " << manufact << std::endl;
+    std::cout << "\nManufacturer: " << manufact << std::endl;
     std::cout << "Model: " << model << std::endl;
     std::cout << "Price: " << price << std::endl;
     wheels.printRim();
-    std::cout << std::endl;
 }
 
 
 
-//--------Wheel
+//------------------------- Wheel --------------------------//
 Wheel::Wheel(int rim, int tire) : rimType(rim), tireType(tire) {
     validateWheel();
 }
@@ -91,29 +96,25 @@ void Wheel::validateWheel() {
 
 std::string Wheel::getRimType() {
     switch(rimType) {
-        case 0:
-            return "null";
-        case 1:
-            return "Steel";
-        case 2:
-            return "Aluminum";
-        default:
-            return "Invalid rim type";
+        case 0: return "null";
+        case 1: return "Steel";
+        case 2: return "Aluminum";
+        default: return "Invalid rim type";
     }
 }
 
 std::string Wheel::getTireType() {
     switch(tireType) {
-        case 0:
-            return "null";
-        case 1:
-            return "Road";
-        case 2:
-            return "Track";
-        default:
-            return "Invalid tire type.";
+        case 0: return "null";
+        case 1: return "Road";
+        case 2: return "Track";
+        default: return "Invalid tire type.";
     }
 }
+
+int Wheel::getRimValue() { return rimType; }
+
+int Wheel::getTireValue() { return tireType; }
 
 void Wheel::printRim() {
     std::cout << "Rims: " << getRimType() << std::endl;
