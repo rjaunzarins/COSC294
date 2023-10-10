@@ -94,6 +94,8 @@ int main() {
 
     //! Part B - 4
     //* A a();    // Interpreted as a functions declaration a(), with return type A
+
+    std::cout << __cplusplus; //Print C++ standard
 }
 
 //! Part B:
