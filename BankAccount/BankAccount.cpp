@@ -25,11 +25,11 @@ class BankAccount {
         void update();
 
         void input();
-        void output();
-        double getBalance();
-        int getDollars();
-        int getCents();
-        double getRate();   //Returns interest rate as a percentage
+        void output() const;
+        double getBalance() const;
+        int getDollars() const;
+        int getCents() const;
+        double getRate() const;   //Returns interest rate as a percentage
         
         
         void setBalance(double balance);
@@ -38,6 +38,7 @@ class BankAccount {
 
         //If newRate is nonnegative, it becomes the new rate. Otherwise, abort program
         void setRate(double newRate);
+        int getAccountNumber() const;
     
     private:
         //A negative amount is represented as negative dollars and negative cents
@@ -45,13 +46,19 @@ class BankAccount {
         int accountDollars; //of balance
         int accountCents; //of balance
         double rate;    //as a percentage
-        int dollarsPart(double amount);
-        int centsPart(double amount);
-        int round(double number);
+        int dollarsPart(double amount) const;
+        int centsPart(double amount) const;
+        int round(double number) const;
 
         //Converts a percentage to a fraction. For example, fraction(50.3) returns 0.503.
-        double fraction(double percent);
+        double fraction(double percent) const;
+        static int accountNumber;
 };
+
+int BankAccount::accountNumber = 0;
+
+bool isLarger(const BankAccount& account1, const BankAccount& account2);
+void welcom(const BankAccount& yourAccount);
 
 int main() {
     BankAccount account1(1345.52, 2.3), account2;
@@ -73,9 +80,19 @@ int main() {
     account2.output();
 }
 
+bool isLarger(const BankAccount& account1, const BankAccount& account2) {
+    return(account1.getBalance() > account2.getBalance());
+}
+void welcome(const BankAccount& yourAccount) {
+    std::cout << "Welcome to our bank.\n" << "The status of your account is:\n";
+    yourAccount.output();
+}
+
+
 
 BankAccount::BankAccount(double balance, double rate) : accountDollars(dollarsPart(balance)), accountCents(centsPart(balance)) {
     setRate(rate);
+    ++accountNumber;
 }
 
 BankAccount::BankAccount(int dollars, int cents, double rate) {
@@ -109,7 +126,7 @@ void BankAccount::input() {
 }
 
 //Uses iostream and cstdlib
-void BankAccount::output() {
+void BankAccount::output() const {
     int absDollars = abs(accountDollars);
     int absCents = abs(accountCents);
     std::cout << "Account balance: $";
@@ -123,19 +140,19 @@ void BankAccount::output() {
     std::cout << "Rate: " << rate << "%\n";
 }
 
-double BankAccount::getBalance() {
+double BankAccount::getBalance() const {
     return (accountDollars + accountCents * 0.01);
 }
 
-int BankAccount::getDollars() {
+int BankAccount::getDollars() const {
     return accountDollars;
 }
 
-int BankAccount::getCents() {
+int BankAccount::getCents() const {
     return accountCents;
 }
 
-double BankAccount::getRate() {
+double BankAccount::getRate() const {
     return rate;
 }
 
@@ -162,12 +179,12 @@ void BankAccount::setRate(double newRate) {
     }
 }
 
-int BankAccount::dollarsPart(double amount) {
+int BankAccount::dollarsPart(double amount) const {
     return static_cast<int>(amount);
 }
 
 //Uses cmath
-int BankAccount::centsPart(double amount) {
+int BankAccount::centsPart(double amount) const {
     double doubleCents = amount * 100; 
     int intCents = (round(fabs(doubleCents))) %100;
     //Can misbehave with negative values, convert to +ve
@@ -177,10 +194,14 @@ int BankAccount::centsPart(double amount) {
 }
 
 //Uses cmath
-int BankAccount::round(double number) {
+int BankAccount::round(double number) const {
     return static_cast<int>(floor(number + 0.5));
 }
 
-double BankAccount::fraction(double percent) {
+double BankAccount::fraction(double percent) const {
     return (percent/100.);
+}
+
+int BankAccount::getAccountNumber() const {
+    return accountNumber;
 }
