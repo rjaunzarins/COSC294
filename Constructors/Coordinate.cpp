@@ -4,10 +4,12 @@ class Coordinate {
     public:
         Coordinate(int xVal = 0, int yVal = 0);
         Coordinate(const Coordinate& original);
-        int getX() const;
-        int getY() const ;
+        int getX() const { return x; };
+        int getY() const { return y; };
+        int getTotalCoordNum() const { return totalCoordNum; }
         void printCoordinates() const;
         bool equals(const Coordinate& coordinates2);
+        friend std::ostream& operator <<(std::ostream& output, const Coordinate& coord);
     private:
         int x;
         int y;
@@ -32,14 +34,12 @@ int main() {
     Coordinate d = a + b;
     Coordinate e = b - a;
     Coordinate f = -e;
+    std::cout << "Total coordinates = " << a.getTotalCoordNum() << std::endl;
     a.printCoordinates();
-    b.printCoordinates();
-    c.printCoordinates();
-    d.printCoordinates();
-    e.printCoordinates();
-    f.printCoordinates();
+    std::cout << a << "\n" << b << "\n" << c << "\n" << d << "\n" << e << "\n" << f << std::endl;
     std::cout << "a = b: " << a.equals(b); std::cout << std::endl;
     std::cout << "b = c: " << (b == c); std::cout << std::endl;
+    std::cout << "Total coordinates = " << a.getTotalCoordNum() << std::endl;
 }
 
 
@@ -49,8 +49,7 @@ Coordinate::Coordinate(const Coordinate& original) {
     this->y = original.y;
     coordNum = ++totalCoordNum;
 }
-int Coordinate::getX() const { return x; }
-int Coordinate::getY() const { return y; };
+
 void Coordinate::printCoordinates() const {
     std::cout << "Coordinates: " << x << "," << y << " - Num: " << coordNum << std::endl;
 }
@@ -61,6 +60,13 @@ bool Coordinate::equals(const Coordinate& coordinates2) {
     }
     return false;
 }
+
+//<< Overload
+std::ostream& operator <<(std::ostream& output, const Coordinate& coord) {
+    output << "(" << coord.x << "," << coord.y << ") - Num: " << coord.coordNum;
+    return output;
+}
+
 //Addition Overload
 const Coordinate operator +(const Coordinate& coord1, const Coordinate& coord2) {
     return Coordinate((coord1.getX() + coord2.getX()), (coord1.getY() + coord2.getY()));
