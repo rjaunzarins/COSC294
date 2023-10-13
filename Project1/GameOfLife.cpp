@@ -248,8 +248,7 @@ bool checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {         
 void pauseGame() {                                                                                          //Uses <chrono>, <thread>
     if(pauseMilliseconds > 0) {                                                                             //If pauseMilliseconds is valid time
         using namespace::std::chrono;                                                                     
-        milliseconds dura(pauseMilliseconds);                                                               //Sleep so all generations are not instantaneously displayed
-        std::this_thread::sleep_for(dura);
+        std::this_thread::sleep_for(milliseconds(pauseMilliseconds));                                                     //Sleep so all generations are not instantaneously displayed 
     }
 }
 
