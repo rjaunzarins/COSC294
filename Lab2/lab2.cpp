@@ -45,7 +45,7 @@ void getInput(double& num1, char& cOp, double& num2) {
             if(std::cin) { // or if(cin.fail()) -- If num1 is valid, continue
                 std::cin >> cOp; 
                 
-                if(cOp == '+' || cOp == '-' || cOp == '*' || cOp == '%' || cOp == '/') {    // If cOp is valid, continue
+                if(cOp == ADD || cOp == SUB || cOp == MUL || cOp == MOD || cOp == DIV) {    // If cOp is valid, continue
                     std::cin >> num2;
                     if(std::cin){           // If num3 is valid, continue
                         valid = true;       // All 3 are valid, therefore valid = true
