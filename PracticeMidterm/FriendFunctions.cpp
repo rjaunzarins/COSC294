@@ -19,7 +19,7 @@ class EqualateralTriangle {
         const EqualateralTriangle operator ++(int flag);    //Postfix ++ - member function - uses int in method signature to show its for postfix overload
         // Non-Member Friend Function Overloads
         friend std::ostream& operator <<(std::ostream& output, const EqualateralTriangle& et);  //must return & otherwise a new copy is made
-        friend std::istream& operator >>(std::istream& input, EqualateralTriangle& et);        
+        friend std::istream& operator >>(std::istream& input, EqualateralTriangle& et);         //not const because we are changing     
         friend const EqualateralTriangle operator +(const EqualateralTriangle& et1, const EqualateralTriangle& et2);
         friend const EqualateralTriangle operator +(const EqualateralTriangle& et1, int length);
         friend const EqualateralTriangle operator +(int length, const EqualateralTriangle& et1);
