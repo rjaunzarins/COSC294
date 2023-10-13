@@ -13,6 +13,7 @@ Authors: Rhy Jaunzarins - 0404377, Kaylee Joyce - 0383068
 #include <chrono>
 #include <thread>
 
+using namespace std::chrono;                                                                                //Used in pauseGame method
 
 /*
 Retrieve user input to set size of grid and number of simulations.
@@ -246,9 +247,8 @@ bool checkGameStateAlive(bool grid[][50], int gridRows, int gridCols) {         
 
 
 void pauseGame() {                                                                                          //Uses <chrono>, <thread>
-    if(pauseMilliseconds > 0) {                                                                             //If pauseMilliseconds is valid time
-        using namespace::std::chrono;                                                                     
-        std::this_thread::sleep_for(milliseconds(pauseMilliseconds));                                                     //Sleep so all generations are not instantaneously displayed 
+    if(pauseMilliseconds > 0) {                                                                             //If pauseMilliseconds is valid time                                                                    
+        std::this_thread::sleep_for((350ms));                                                               //Sleep so all generations are not instantaneously displayed 
     }
 }
 
