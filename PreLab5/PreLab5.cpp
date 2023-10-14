@@ -29,9 +29,8 @@ int main() {
     Date date2(year, month, day);
     date2.printDate();
     Date date3;
-
-    std::cin >> date3;
-    std::cout << date3 << std::endl;
+    std::cin >> date3;                          //Overloaded extraction operator
+    std::cout << date3 << std::endl;            //Overloaded insertion operator
 
     //std::cout << __cplusplus << std::endl;
 }
