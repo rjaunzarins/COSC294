@@ -26,22 +26,28 @@ class Vector {
 
 
 int main() {
-    Vector v1(10);
+    Vector v1(3);
+    std::cout << "Enter array: ";
+    std::cin >> v1;
     std::cout << "Dimensions: " << v1.getDimensions() << std::endl;
     std::cout << v1 << std::endl;
+    
     Vector v2(v1);
     std::cout << "Dimensions: " << v2.getDimensions() << std::endl;
     std::cout << v2 << std::endl;
-    //Vector v3 = std::move(v1);      //! why error but working?
-    size_type size;
-    std::cout << "Enter size: ";
-    std::cin >> size << std::endl;
-    Vector v3(size);
-    std::cout << v3;
-    std::cout << "Enter array: ";
-    std::cin >> v3;
+    
+    Vector v3(std::move(v1));   
     std::cout << "Dimensions: " << v3.getDimensions() << std::endl;
     std::cout << v3 << std::endl;
+
+    size_type size;
+    std::cout << "Enter size: ";
+    std::cin >> size;
+    Vector v4(size);
+    std::cout << "Enter array: ";
+    std::cin >> v4;
+    std::cout << "Dimensions: " << v4.getDimensions() << std::endl;
+    std::cout << v4 << std::endl;
     std::cout << "Dimensions: " << v1.getDimensions() << std::endl;
     std::cout << v1 << std::endl;
 
@@ -54,19 +60,17 @@ Vector::Vector(size_type dimensions) : dimensions(dimensions), array(dimensions,
 Vector::Vector(const Vector& v) : dimensions(v.dimensions), array(v.array) {}    // after : is initializer list
 
 Vector::Vector(Vector&& v) : dimensions(v.dimensions), array(std::move(v.array)) {
-    v.reset();
+    dimensions = 0;
 }
         
 void Vector::reset() {
-    // for (size_type i = 0; i < array.size(); ++i) {
-    //     array[i] = 0.0;
-    // }
-    dimensions = 0;         //! should this be here?
-    array.resize(0);        //! should this be here?
+    for (size_type i = 0; i < dimensions; ++i) {
+        array[i] = 0.0;
+    }
 }
 
 std::ostream& operator <<(std::ostream& outStream, const Vector& v) {
-    for (size_type i = 0; i < v.array.size(); ++i) {
+    for (size_type i = 0; i < v.dimensions; ++i) {
        outStream << v.array[i] << " ";
     }
     return outStream;
@@ -81,7 +85,7 @@ std::istream& operator >>(std::istream& inStream, Vector& v) {          //!doesn
         std::cerr << "\nInvalid Input." << std::endl;
         return inStream;
     }
-    for (size_type i = 0; i < v.array.size(); ++i) {
+    for (size_type i = 0; i < v.dimensions; ++i) {      //use dimensions so reset() works
         inStream >> v.array[i];
         if(!(inStream >> eatChar)) {
             std::cin.clear(); 
