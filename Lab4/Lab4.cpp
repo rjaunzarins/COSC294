@@ -7,7 +7,7 @@ class Date {
         int getYear() const;
         int getMonth() const;
         int getDay() const;
-        void printDate()const;
+        void printDate() const;
     private:
         int year;
         int month;

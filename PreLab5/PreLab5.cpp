@@ -4,10 +4,10 @@
 class Date {
     public:
         Date(int year = 2000, int month = 1, int day = 1);
-        int getYear();
-        int getMonth();
-        int getDay();
-        void printDate();
+        int getYear() const;
+        int getMonth() const;
+        int getDay() const;
+        void printDate() const;
         friend std::ostream& operator <<(std::ostream& output, const Date& date);  
         friend std::istream& operator >>(std::istream& input, Date& date);          
         friend bool operator ==(const Date& date1, const Date& date2);
@@ -23,7 +23,7 @@ void getDateInput(int& year, int& month, int& day);
 
 int main() {
     int year, month, day;
-    Date date1;
+    Date date1(1990,12,12);
     date1.printDate();
     getDateInput(year, month, day);
     Date date2(year, month, day);
@@ -110,19 +110,19 @@ void Date::validateDate() {
     }
 }
 
-int Date::getYear() {
+int Date::getYear() const {
     return year;
 }
 
-int Date::getMonth() {
+int Date::getMonth() const {
     return month;
 }
 
-int Date::getDay() {
+int Date::getDay() const {
     return day;
 }
 
-void Date::printDate() {
+void Date::printDate() const {
     if(month > 10) {
         if(day > 10) {
             std::cout << year << "-" << month << "-" << day << std::endl;
@@ -142,16 +142,12 @@ void Date::printDate() {
 }
 
 bool operator ==(const Date& date1, const Date& date2) {
-    if( (date1.year == date2.year) && (date1.month == date2.month) && (date1.day == date2.day) ) {
-        return true;
-    }
-    return false;
+    return ( (date1.year == date2.year) && (date1.month == date2.month) && (date1.day == date2.day) );
+  
 }
 bool operator !=(const Date& date1, const Date& date2) {
-    if( (date1.year != date2.year) && (date1.month != date2.month) && (date1.day != date2.day) ) {
-        return true;
-    }
-    return false;
+    return ( (date1.year != date2.year) && (date1.month != date2.month) && (date1.day != date2.day) );
+     
 }
 std::ostream& operator <<(std::ostream& output, const Date& date) {
     if(date.month > 9) {
