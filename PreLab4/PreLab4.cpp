@@ -23,6 +23,8 @@ class Person {
         Person(std::string firstName, std::string lastName, int year, int month, int day);
         //DEFAULT CONSTRUCTOR
         Person();
+        //Copy Constructor
+        Person(Person& p);
         std::string getFirstName();
         std::string getLastName();
         Date getBirthday();
@@ -169,6 +171,10 @@ Person::Person(std::string firstName, std::string lastName, int year, int month,
 
 //PERSON - DEFAULT CONSTUCTOR
 Person::Person() : Person("blank", "blank", 1900, 01, 01) { } 
+
+//Copy Constructor
+Person::Person(Person& p) : firstName(p.firstName), lastName(p.lastName), birthday(Date(p.birthday)) {}
+
 
 std::string Person::getFirstName() {
     return firstName;

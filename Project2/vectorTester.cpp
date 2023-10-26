@@ -2,17 +2,18 @@
 #include <iostream>
 // #include "vector.h"
 
-using size_type = unsigned;
+using size_type = size_t;
 using element_type = double;
 
 class Vector {
     
     public:
         Vector(size_type dimensions = 1);                               //Constructor
-        Vector(const Vector& v);                                    //Copy Constructor - Pass by reference - const so original cannot be changed
-        Vector(Vector&& v);                                          //Move Constructor
+        Vector(const Vector& v);                                        //Copy Constructor - Pass by reference - const so original cannot be changed
+        Vector(Vector&& v);                                             //Move Constructor
+        ~Vector();                                                      //Destructor
 
-        size_type getDimensions() const { return dimensions; };     // Allows for inlining
+        size_type getDimensions() const { return dimensions; };         // Allows for inlining
         void reset();
         
         friend std::ostream& operator <<(std::ostream& outStream, const Vector& v);
@@ -20,12 +21,12 @@ class Vector {
     
     private:
         size_type dimensions;
-        std::vector<element_type> array;
-        
+        element_type* array = new element_type[dimensions];
 };
 
 
 int main() {
+
     Vector v1(3);
     std::cout << "Enter array: ";
     std::cin >> v1;
@@ -51,16 +52,29 @@ int main() {
     std::cout << "Dimensions: " << v1.getDimensions() << std::endl;
     std::cout << v1 << std::endl;
 
-    // std::cout << v3;
+    delete [] &v1;
+    delete [] &v2;
+    delete [] &v3;
+    delete [] &v4;
 
+    std::cout << v1;
 }
 //! figure out what array(dimensions, 0.0) is doing
-Vector::Vector(size_type dimensions) : dimensions(dimensions), array(dimensions, 0.0) {}    // after : is initializer list
+Vector::Vector(size_type dimensions) : dimensions(dimensions), array(new element_type[dimensions]{0.}) {}    // after : is initializer list
 
-Vector::Vector(const Vector& v) : dimensions(v.dimensions), array(v.array) {}    // after : is initializer list
+Vector::Vector(const Vector& v) : dimensions(v.dimensions), array(new element_type[v.dimensions]) {
+    for (size_type i = 0; i < v.dimensions; ++i) {
+        array[i] = v.array[i];
+    }
+}    // after : is initializer list
 
-Vector::Vector(Vector&& v) : dimensions(v.dimensions), array(std::move(v.array)) {
-    dimensions = 0;
+Vector::Vector(Vector&& v) : dimensions(v.dimensions), array(new element_type[v.dimensions]) {
+    array = std::move(v.array);
+    v.dimensions = 0;
+}
+
+Vector::~Vector() {
+    delete []array;
 }
         
 void Vector::reset() {

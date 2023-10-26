@@ -190,19 +190,19 @@ void getDateInput(int& year, int& month, int& day){
                     inputInvalid = false;
                 }
                 else {
-                    std::cin.setstate(std::ios_base::failbit);
+                    std::cin.clear();
                     std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                     std::cout << "Invalid day input" << std::endl;
                 }
             }
             else {
-                std::cin.setstate(std::ios_base::failbit); 
+                std::cin.clear(); 
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Invalid month input" << std::endl;
             }
         }
         else {
-            std::cin.setstate(std::ios_base::failbit);
+            std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Invalid year input" << std::endl;
         }
