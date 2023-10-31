@@ -11,3 +11,11 @@ After file has been compiled like this you can copy the code to recompile file a
 
 example of configure default build task line:
 /usr/bin/clang++ -std=c++20 -stdlib=libc++ -g /Users/rhy/Desktop/Workspace/COSC2947/Lab1/lab1.cpp -o /Users/rhy/Desktop/Workspace/COSC2947/Lab1/lab1 
+
+
+
+Multiple programs g++:
+g++ -std=c++20 -o VectorTester VectorTester.cpp vector.cpp
+
+Multiple Files clang++:
+clang++ -std=c++20 -o VectorTester VectorTester.cpp vector.cpp

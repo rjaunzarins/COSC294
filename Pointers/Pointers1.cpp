@@ -1,6 +1,8 @@
 #include <iostream>
 
 
+std::vector<int> twoSum(std::vector<int>& nums, int target);
+
 void printNumber( int* numberPtr ) {
     std::cout << *numberPtr << "\n";
 }
@@ -76,6 +78,69 @@ int main() {
         std::cout << "Element[" << i << "]: " << *(arr+i) << "\n";  //Print in loop with dereferenced element
     }
 
+    std::cout << "\n";
+
+    std::vector<int> nums = {3,2,4};
+    int target = 6;
+    std::vector<int> solution = twoSum(nums,target);
     
+    std::cout << "Element: (" << solution[0] << "," << solution[1] << ")\n";
+    std::cout << "0%10 = " << 0%10 
+              << "\n1%10 = " << 1%10
+              << "\n2%10 = " << 2%10
+              << "\n3%10 = " << 3%10
+              << "\n4%10 = " << 4%10
+              << "\n5%10 = " << 5%10
+              << "\n6%10 = " << 6%10
+              << "\n7%10 = " << 7%10
+              << "\n8%10 = " << 8%10
+              << "\n9%10 = " << 9%10;
+
+    // std::vector<int> nums = {1,2,3,4,5,6};
+    // int* is = &nums[0];
+    // int* ie = &nums[nums.size()-1];
+    // int size = nums.size();
+    // while(is != ie) {
+    //        if(*is == *ie) {
+    //             std::cout << *is << " + " << *ie << " = " << (*is+*ie) << "\n";
+    //        }
+    //        //is = *(nums+1); 
+    // }
 
 }
+
+
+//Two Sum - 
+// start with sorted elements
+//For a given vector add two elements - return a vector of all elemnts that add to target number
+// cannot use element more than once
+// * start with pointer on vec[0] and vec[end],
+//      • if the sum is greater than target, move vec[end]-1 (back one)
+//      • if the sum is smaller than target, move vec[0]+1 (up one)
+
+
+
+std::vector<int> twoSum(std::vector<int>& nums, int target) {
+    std::vector<int> solution;
+    int head = 0, tail;
+    while(head < nums.size()) {
+        tail = head+1;
+        while(tail < nums.size()) {
+            if(nums[head] + nums[tail] == target)
+                return solution = {head,tail};
+            ++tail;
+        }
+        ++head;
+    }  
+    return solution = {-1,-1};  
+}
+
+
+
+
+
+//      0 0 0 0 0
+//      1 1 1 1 1
+//      2 2 2 2 2
+//      3 3 3 3 3
+//      4 4 4 4 4

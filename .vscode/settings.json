@@ -68,7 +68,8 @@
         "stack": "cpp",
         "thread": "cpp",
         "charconv": "cpp",
-        "memory_resource": "cpp"
+        "memory_resource": "cpp",
+        "prelab7": "cpp"
     },
     "C_Cpp.default.compilerPath": "/usr/bin/clang++"
 }
