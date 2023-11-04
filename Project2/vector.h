@@ -3,7 +3,7 @@
 #include <iostream>
 #include <cmath>
 
-using size_type = size_t;
+using size_type = unsigned int;
 using element_type = double;
 
 class Vector {
@@ -137,7 +137,7 @@ class Vector {
          * @param index The element to access
          * @return The value in array at the specified index
         */
-        double& operator [](int index) { return array[index]; }             //[] Overload
+        element_type& operator [](size_type index) { return array[index]; }             //[] Overload
         
         /**
          * Subscript Overload - Const Instances
@@ -146,7 +146,7 @@ class Vector {
          * @param index The element to access
          * @return The value in array at the specified index
         */
-        double& operator [](int index) const { return array[index]; }       //[] Overload const
+        element_type& operator [](size_type index) const { return array[index]; }       //[] Overload const
         
         /**
          * magnitude Function
@@ -173,29 +173,29 @@ class Vector {
          * @return The distance between the two points
         */
         friend const element_type distanceBetweenPoints(const Vector& v1, const Vector& v2);
-        
-        /**
-         * Insertion Operator Overload
-         * Allows printing of a Vector object using the Insertion operator
-         * @param outStream The output stream object to store data to print
-         * @param v The Vector to print
-         * @return The modified output to print
-        */
-        friend std::ostream& operator <<(std::ostream& outStream, const Vector& v);
-        
-        /**
-         * Extraction Operator Overload
-         * Allows the use of user input for creating a Vector object with 
-         * the extraction operator
-         * @param inStream The input stream object to store user input
-         * @param v The Vector to store data in
-         * @return The modified input stream
-        */
-        friend std::istream& operator >>(std::istream& inStream, Vector& v);
 
     private:
         size_type dimensions;                                               //The number of dimensions in the array
         element_type *array;                                                //Pointer for element_type array
 };
+
+    /**
+     * Insertion Operator Overload
+     * Allows printing of a Vector object using the Insertion operator
+     * @param outStream The output stream object to store data to print
+     * @param v The Vector to print
+     * @return The modified output to print
+    */
+    std::ostream& operator <<(std::ostream& outStream, const Vector& v);
+    
+    /**
+     * Extraction Operator Overload
+     * Allows the use of user input for creating a Vector object with 
+     * the extraction operator
+     * @param inStream The input stream object to store user input
+     * @param v The Vector to store data in
+     * @return The modified input stream
+    */
+    std::istream& operator >>(std::istream& inStream, Vector& v);
 
 #endif  //VECTOR_H

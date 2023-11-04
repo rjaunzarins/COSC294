@@ -46,34 +46,44 @@ int main() {
 
 
 
-    Vector v1(3);
+    Vector v1(abs(-3));
     // v1 = {3,-4,5};
     //v1[0] = getRandomInt(); v1[1] = getRandomInt(); v1[2] = getRandomInt();
     v1[0] = 1; v1[1] = -2; v1[2] = 3;
-    Vector v2(3);
-    //v2[0] = getRandomInt(); v2[1] = getRandomInt(); v2[2] = getRandomInt();
-    v2[0] = 0; v2[1] = 1; v2[2] = 4;
-    // v2 = {2,7,-3};
-    std::cout << "V1 = " << v1 << "\n";
-    std::cout << "V2 = " << v2 << "\n";
-    element_type v1mag = v1.magnitude();
-    element_type v2mag = v2.magnitude();
+    std::cout << v1 << "\n";
+    // Vector v2(std::move(v1));
+    // //v2[0] = getRandomInt(); v2[1] = getRandomInt(); v2[2] = getRandomInt();
+    // //v2[0] = 0; v2[1] = 1; v2[2] = 4;
+    // std::cout << "V2 address: " << &v2 << "\n";
+    // //v2 = {2,7,-3};
+    // std::cout << "V1 + 2 = " << v1*2 << "\n";
+    // std::cout << "V2 - 2 = " << v2/2 << "\n";
+
+
+
     
-    std::cout << "Dot product v1 * v2: " << (v1*v2) << "\n";
-    std::cout << "Cross Product v1 / v2: " << (v1/v2) << "\n";
-    std::cout << "Subtraction v1 - v2: " << (v1-v2) << "\n";
-    std::cout << "Addition v1 + v2: " << (v1+v2) << "\n";
 
-    setPrecision(2);
-    std::cout << "V1 Magnitude = " << v1mag << "\n";
-    std::cout << "V2 Magnitude = " << v2mag << "\n";
-    std::cout << "Angle Between Vectors = " << angleBetweenVectors(v1,v2) << "\n";
-    std::cout << "Distance Between Points = " << distanceBetweenPoints(v1,v2) << "\n";
 
-    v1.reset();
-    std::cout << "Reset V1: " << v1 << "\n";
+    // std::cout << "V1 = " << v1 << "\n";
+    // std::cout << "V2 = " << v2 << "\n";
+    // element_type v1mag = v1.magnitude();
+    // element_type v2mag = v2.magnitude();
+    
+    // std::cout << "Dot product v1 * v2: " << (v1*v2) << "\n";
+    // std::cout << "Cross Product v1 / v2: " << (v1/v2) << "\n";
+    // std::cout << "Subtraction v1 - v2: " << (v1-v2) << "\n";
+    // std::cout << "Addition v1 + v2: " << (v1+v2) << "\n";
 
-    std::cout << __cplusplus << std::endl;
+    // setPrecision(2);
+    // std::cout << "V1 Magnitude = " << v1mag << "\n";
+    // std::cout << "V2 Magnitude = " << v2mag << "\n";
+    // std::cout << "Angle Between Vectors = " << angleBetweenVectors(v1,v2) << "°\n";
+    // std::cout << "Distance Between Points = " << distanceBetweenPoints(v1,v2) << "\n";
+
+    // v1.reset();
+    // std::cout << "Reset V1: " << v1 << "\n";
+
+    // std::cout << __cplusplus << std::endl;
     
 }
 
