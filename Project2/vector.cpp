@@ -5,7 +5,7 @@
 /**
  * Vector Constructor
 */
-Vector::Vector(size_type dimensions) : dimensions(dimensions), array(new element_type[dimensions]{0.}) { std::cout << "Constructor"; }    // after : is initializer list
+Vector::Vector(size_type dimensions) : dimensions(dimensions), array(new element_type[dimensions]{0.}) {}    // after : is initializer list
 
 /**
  * Vector Copy Constructor
@@ -15,7 +15,6 @@ Vector::Vector(const Vector& v) : dimensions(v.dimensions), array(new element_ty
     for (size_type i = 0; i < v.dimensions; ++i) {
         array[i] = v.array[i];
     }
-    std::cout << "Copy Constructor";
 }    
 
 /**
@@ -23,12 +22,8 @@ Vector::Vector(const Vector& v) : dimensions(v.dimensions), array(new element_ty
  * Moves members of v to calling instance, then reset v
 */
 Vector::Vector(Vector&& v) : dimensions(v.dimensions), array(std::move(v.array)) {
-    std::cout << "array: " << array << "\n";    
-    std::cout << "V.array: " << v.array << "\n";
-
     v.dimensions = 0;
     v.array = nullptr; 
-    std::cout << "Move Constructor";
 }
 
 /**
@@ -59,7 +54,6 @@ const Vector& Vector::operator =(const Vector& v) const {
             array[i] = v[i];
         }
     }
-    std::cout << "Copy Assignment";
     return *this;
 }               
 
@@ -74,7 +68,6 @@ const Vector& Vector::operator =(Vector&& v) noexcept {
         v.reset();
         v.array = nullptr;   
     }
-    std::cout << "Move Assignment";
     return *this;
 }                    
 
@@ -127,7 +120,7 @@ const Vector Vector::operator -(element_type scalar) const {
  */
 const Vector Vector::operator +(const Vector& v) const {
     if(dimensions != v.dimensions) {
-        std::cout << "Error: Vectors must be of the same size for vector addition\n";
+        std::cerr << "Error: Vectors must be of the same size for vector addition\n";
         return Vector(0);
     }
     Vector summedVector(dimensions);
@@ -142,7 +135,7 @@ const Vector Vector::operator +(const Vector& v) const {
  */
 const Vector Vector::operator -(const Vector& v) const {
     if(dimensions != v.dimensions) {
-        std::cout << "Error: Vectors must be of the same size for vector subtraction\n";
+        std::cerr << "Error: Vectors must be of the same size for vector subtraction\n";
         return Vector(0);
     }
     Vector subtractedVector(dimensions);
@@ -157,7 +150,7 @@ const Vector Vector::operator -(const Vector& v) const {
  */
 const element_type Vector::operator *(const Vector& v) const {
     if(dimensions != v.dimensions) {
-        std::cout << "Error: Vectors must be of the same size for dot product\n";
+        std::cerr << "Error: Vectors must be of the same size for dot product\n";
         exit(1);
     }
     element_type dotProduct = 0;
@@ -172,7 +165,7 @@ const element_type Vector::operator *(const Vector& v) const {
  */
 const Vector Vector::operator /(const Vector& v) const {
     if(dimensions != 3 || v.dimensions != 3) {
-        std::cout << "Error: Vectors must both be of dimension 3\n";
+        std::cerr << "Error: Vectors must both be of dimension 3\n";
         exit(1);
     }
     Vector crossProduct(3);
@@ -198,7 +191,7 @@ const element_type Vector::magnitude() const {
  */
 const element_type angleBetweenVectors(const Vector& v1, const Vector& v2) {
     if(v1.dimensions != v2.dimensions) {
-        std::cout << "Error - must be of same dimension" << "\n";
+        std::cerr << "Error - must be of same dimension" << "\n";
         exit(1);
     }
     double cosineAngle = ( (v1*v2) / ((v1.magnitude()) * (v2.magnitude())) );
@@ -212,7 +205,7 @@ const element_type angleBetweenVectors(const Vector& v1, const Vector& v2) {
  */
 const element_type distanceBetweenPoints(const Vector& v1, const Vector& v2) {
     if(v1.dimensions != v2.dimensions) {
-        std::cout << "Error - must be of same dimension" << "\n";
+        std::cerr << "Error - must be of same dimension" << "\n";
         exit(1);
     }
     double sum = 0;
