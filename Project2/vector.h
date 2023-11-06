@@ -1,3 +1,5 @@
+//Rhy Jaunzarins - 0404377, Kaylee Joyce - 0383068
+
 #ifndef VECTOR_H
 #define VECTOR_H
 #include <iostream>
@@ -12,190 +14,202 @@ class Vector {
         
         /**
          * Vector Constructor 
-         * Initializes dimensions to 3 if no value is passed
-         * @param dimensions The number of dimensions in the array
+         * Precondition: None.
+         * @param dimensions The number of dimensions in the data.
+         * Postcondition: Initializes a new data of specified size (default = 3),
+         * sets member variables, and sets all values in Vector to zero.
         */
-        Vector(size_type dimensions = 3);                                   //Constructor
+        Vector(size_type dimensions = 3);                                   
         
         /**
          * Vector Copy Constructor
-         * Performs a deep copy of the members in v
-         * @param v The Vector to be copied
+         * Preconditiion: A Vector must have been created and initialized.
+         * Param: The Vector to be copied
+         * Postcondition: Returns a deep copy of passed Vector.
         */
-        Vector(const Vector& v);                                            //Copy Constructor - Pass by reference - const so original cannot be changed
+        Vector(const Vector&);                                            
         
         /**
          * Vector Move Constructor
-         * Moves all the data in the incoming Vector into the new Vector
-         * Resets all the data in the incoming Vector to all zeros
-         * @param v The Vector to move
+         * Precondition: A Vector must have been created and initialized.
+         * Param: The Vector to move
+         * Postcondition: Moves all data from incoming Vector to new Vector.
+         * Resets all data in incoming Vector to zeroes.
         */
-        Vector(Vector&& v);                                                 //Move Constructor
+        Vector(Vector&&);                                                 
         
         /**
          * Vector Destructor
-         * Delete array and return memory to freestore manager
+         * Precondition: A Vector must have been created and initialized.
+         * Postcondition: Deletes data and returns memory to freestore manager.
         */
-        ~Vector();                                                          //Destructor
+        ~Vector();                                                          
 
         /**
          * getDimensions Function
-         * @return The number of dimensions in Vector
+         * Preconditiion: None.
+         * Postconditiion:  Returns the number of dimensions in Vector.
         */
-        size_type getDimensions() const { return dimensions; };             //Return the number of dimensions
+        size_type getDimensions() const { return dimensions; };             
         
         /**
          * reset Function
-         * Sets all elements in array to 0.0
+         * Precondition: None.
+         * Postcondition: Sets all elements in data to 0.0.
         */
-        void reset();                                                       //Reset 
+        void reset();                                                       
         
         /**
          * Equality Overload - Copy
-         * Performs a deep copy of Vector v
-         * @param v The Vector to copy
-         * @return A reference to the new Vector
+         * Precondition: Vectors must have same dimension.
+         * Param: The Vector to copy
+         * Postcondition: Performs a deep copy of incoming Vector and
+         * returns a reference to the new Vector.
         */
-        const Vector& operator =(const Vector& v) const;                    //Deep copy
+        const Vector& operator =(const Vector&) const;                   
         
         /**
          * Equality Overload - Move
-         * Move all the data in the incoming Vector into the calling Vector
-         * Resets all the data in the incoming Vector to all zeros
-         * @param v The Vector to move
-         * @return A reference to the new Vector
+         * Precondition: Vectors nust have same dimension.
+         * Param: The Vector to move
+         * Postcondition: Moves all data from incoming Vector to calling
+         * Vector and resets data in incoming Vector to all zeroes. 
+         * Returns a reference to the new Vector.
         */
-        const Vector& operator =(Vector&& v) noexcept;                      //Move   
+        const Vector& operator =(Vector&&);                      
         
         /**
          * Multiplication Overload - Scalar
-         * Multiply each element in array by a scalar amount
-         * @param scalar The scalar amount to multiply
-         * @return The resulting Vector of the multiplication
+         * Precondition: None.
+         * Param: The scalar amount to multiply
+         * Postcondition: Multiplies each element in data by a scalar.
+         * Returns the resulting Vector of the multiplication
         */
-        const Vector operator *(element_type scalar) const;                 //Scalar Mul - Member
+        const Vector operator *(element_type) const;                 
         
         /**
          * Division Overload - Scalar
-         * Divide each element in array by a scalar amount
-         * @param scalar The scalar amount to divide
-         * @return The resulting Vector of the division
+         * Precondition: Scalar passed cannot = 0.
+         * Param: The scalar amount to divide
+         * Postcondition: Divide each element in data by a scalar.
+         * The resulting Vector of the division
         */
-        const Vector operator /(element_type scalar) const;                 //Scalar Div - Member
+        const Vector operator /(element_type) const;                 
         
         /**
          * Addition Overload - Scalar
-         * Add a scalar amount to each element in array
-         * @return The resulting Vector of the addition
+         * Precondition: None.
+         * Param: The scalar amount to add.
+         * Postcondition: Adds a scalar amount to each element in data.
+         * Returns the resulting Vector of the addition.
         */
-        const Vector operator +(element_type scalar) const;                 //Scalar Add - Member
+        const Vector operator +(element_type) const;                 
         
-        /**
+         /**
          * Subtraction Overload - Scalar
-         * Subtract a scalar amount from each element in array
-         * @param scalar The scalar amount to subtract
-         * @return The resulting Vector of the subtraction
+         * Precondition: None.
+         * Param: The scalar amount to subtract.
+         * Postcondition: Subtracts a scalar amount to each element in data.
+         * Returns the resulting Vector of the subtraction.
         */
-        const Vector operator -(element_type scalar) const;                 //Scalar Sub - Member
+        const Vector operator -(element_type) const;                 
         
         /**
          * Addition Overload - Vector
-         * Each corresponding element of the Vectors are added
-         * @param v The Vector to add
-         * @return The resulting Vector of the addition
+         * Precondition: Vectors must have same dimension.
+         * Param: The Vector to add.
+         * Postcondition: Returns the resulting Vector of the addition.
         */
-        const Vector operator +(const Vector& v) const;                     //Vector Add
+        const Vector operator +(const Vector&) const;                     
         
         /**
          * Subtraction Overload - Vector
-         * Each corresponding element Vector v are subtracted from array
-         * @param v The Vector to subtract
-         * @return The resulting Vector of the subtraction
+         * Precondition: Vectors must have same dimension.
+         * Param: The Vector to subtract.
+         * Postcondition: Returns the resulting Vector of the subtraction.
         */
-        const Vector operator -(const Vector& v) const;                     //Vector Sub
+        const Vector operator -(const Vector&) const;                    
         
         /**
          * Multiplication Overload - Dot Product
-         * Performs the dot product on calling Vector and v
-         * @param v The Vector to multiply by
-         * @return The dot product of the two Vectors
+         * Precondition: Vectors must have same dimension.
+         * Param: The Vector to dot product with the calling Vector.
+         * Postcondition: Performs the dot product of the calling Vector and
+         * passed Vector. Returns the dot product.
         */
-        const element_type operator *(const Vector& v) const;               //Vector Mult (dot product)
+        const element_type operator *(const Vector&) const;               
         
         /**
          * Division Overload - Cross Product
-         * Performs the cross product on calling Vector and v
-         * @param v The Vector to divide by
-         * @return The resulting Vector of the cross product
+         * Precondition: Both Vectors must have dimension = 3.
+         * Param: The Vector to cross product with the calling Vector.
+         * Postcondition: Performs the cross product of the calling Vector and
+         * passed Vector. Returns Vector of cross product.
         */
-        const Vector operator /(const Vector& v) const;                     //Vector Div (cross product
+        const Vector operator /(const Vector&) const;                    
         
         /**
          * Subscript Overload - Non-Const Instances
-         * Allows access to the elements of array with the subscript 
-         * operator for non-const instances
-         * @param index The element to access
-         * @return The value in array at the specified index
+         * Precondition: Valid index must be passed.
+         * Param: The element to retrieve.
+         * Postcondition: Returns the value in data at the specified index.
         */
-        element_type& operator [](size_type index) { return array[index]; }             //[] Overload
+        element_type& operator [](size_type index) { return data[index]; }             
         
         /**
          * Subscript Overload - Const Instances
-         * Allows access to the elements of array with the subscript 
-         * operator for const instances
-         * @param index The element to access
-         * @return The value in array at the specified index
+         * Precondition: Valid index must be passed.
+         * Param: The element to access.
+         * Postcondition: Returns the value in data at the specified index.
         */
-        element_type& operator [](size_type index) const { return array[index]; }       //[] Overload const
+        element_type& operator [](size_type index) const { return data[index]; }     
         
         /**
          * magnitude Function
-         * Calculates the magnitude of the calling Vector
-         * @return The magnitude of the Vector
+         * Precondition: A Vector must have been created and initialized.
+         * Postcondition: Calculates and returns the magnitude of the calling Vector.
         */
         const element_type magnitude() const;
 
         /**
          * angleBetweenVectors Function
-         * Calculates the angle between two vectors of the same dimension
-         * @param v1 The first Vector
-         * @param v2 The second Vector
-         * @return The angle between the two Vectors
+         * Precondition: The two Vectors must have the same dimensions.
+         * Param: The first Vector
+         * Param: The second Vector
+         * Postcondition: Calculates and returns the angle between two vectors.
         */
-        friend const element_type angleBetweenVectors(const Vector& v1, const Vector& v2);
+        friend const element_type angleBetweenVectors(const Vector&, const Vector&);
         
         /**
          * distanceBetweenPoints Function
-         * Calculates the distance between the points of two Vectors
-         * of the same dimension
-         * @param v1 The first Vector
-         * @param v2 The second Vector
-         * @return The distance between the two points
+         * Precondition: Vectors must have same dimensions.
+         * Param: The first Vector.
+         * Param: The second Vector.
+         * Returns: The distance between the two points.
         */
-        friend const element_type distanceBetweenPoints(const Vector& v1, const Vector& v2);
+        friend const element_type distanceBetweenPoints(const Vector&, const Vector&);
 
     private:
-        size_type dimensions;                                               //The number of dimensions in the array
-        element_type *array;                                                //Pointer for element_type array
+        size_type dimensions;                                              
+        element_type *data;                                                
 };
 
     /**
      * Insertion Operator Overload
-     * Allows printing of a Vector object using the Insertion operator
-     * @param outStream The output stream object to store data to print
-     * @param v The Vector to print
-     * @return The modified output to print
+     * Preconditiion: None.
+     * Param: The output stream object to store data to print.
+     * Param: The Vector to print.
+     * Returns: The modified output to print.
     */
-    std::ostream& operator <<(std::ostream& outStream, const Vector& v);
+    std::ostream& operator <<(std::ostream&, const Vector&);
     
     /**
      * Extraction Operator Overload
-     * Allows the use of user input for creating a Vector object with 
-     * the extraction operator
-     * @param inStream The input stream object to store user input
-     * @param v The Vector to store data in
-     * @return The modified input stream
+     * Precondition: None.
+     * Param: The input stream object to store user input
+     * Param:The Vector to store data in
+     * Returns: The modified input stream
     */
-    std::istream& operator >>(std::istream& inStream, Vector& v);
+    std::istream& operator >>(std::istream&, Vector&);
 
-#endif  //VECTOR_H
+#endif

@@ -1,91 +1,102 @@
+//Rhy Jaunzarins - 0404377, Kaylee Joyce - 0383068
+
 #include <iostream>
 #include <cmath>
 #include <ctime>
 #include "vector.h"
 
+//?using element_type = double;
+
+
+//Set double precision to specified amount
 void setPrecision(int precision);
-int getRandomInt();
+//File vector data with random doubles
+void fillVector(Vector& vectorIn);
+//Return a random double between -10 and 10
+int getRandomDouble();
+
 
 int main() {
 
     srand(time(0));
-    // Vector v1(3);
-    // std::cout << "Enter V1 array: ";
-    // std::cin >> v1;
-    // std::cout << "V1 Dimensions: " << v1.getDimensions() << std::endl;
-    // std::cout << v1 << std::endl;
+    setPrecision(2);                                                                                            //Set to two decimal places
 
-    // Vector v5(3);
-    // std::cout << "Enter V5 array: ";
-    // std::cin >> v5;
-    // std::cout << "V5 Dimensions: " << v5.getDimensions() << std::endl;
-    // std::cout << v5 << std::endl;
+    std::cout << "\n--------------- User Input ---------------\n";
+    //cin & cout Overloads 
+    std::cout << "Enter vector dimensions: ";
+    size_type userSize;
+    std::cin >> userSize;
+    Vector userVector(userSize);                                                                                //Constructor       
+    std::cout << "Enter userVector vector: ";
+    std::cin >> userVector;                                                                                     //Overloaded extraction operator
+    std::cout << "\nuserVector Dimensions: " << userVector.getDimensions() << std::endl;                        //getDimensions()
+    std::cout << "userVector: " << userVector << "\n\n";                                                        //Overloaded insertion operator
+
+
+    //Constructor Overloads
+    std::cout << "\n--------- Constructor Overloads ----------" << "\n";
+    Vector constructVector(3);
+    fillVector(constructVector);
+    std::cout << "constructVector: " << constructVector << "\n";
+    Vector copyConstructVector(constructVector);                                                                //Copy constructor
+    std::cout << "\ncopyConstructVector Dimensions: " << copyConstructVector.getDimensions() << std::endl;
+    std::cout << "copyConstructVector: " << copyConstructVector << "\n";
+    std::cout << "constructVector after copy: " << constructVector << "\n";                                     //Vector.data still contains data
+    Vector moveConstructVector(std::move(constructVector));                                                     //Move constructor
+    std::cout << "\nmoveConstructVector Dimensions: " << moveConstructVector.getDimensions() << std::endl;
+    std::cout << "moveConstructVector: " << moveConstructVector << "\n";
+    std::cout << "constructVector after move: " << constructVector << "\n\n";                                   //Vector.data pointing to nullptr
+
+
+    //Assignment Overloads
+    std::cout << "\n----------- Assignment Overloads ----------" << "\n";
+    Vector assignVector(3);
+    assignVector[0]=1; assignVector[1]=2; assignVector[2]=3;
+    std::cout << "assignVector: " << assignVector << "\n";
+    Vector copyAssign;
+    copyAssign = assignVector;                                                                                  //Copy assignment operator
+    std::cout << "\ncopyAssignVector: " << copyAssign << "\n";
+    std::cout << "assignVector after copy: " << assignVector << "\n";
+    Vector moveAssign;
+    moveAssign = std::move(assignVector);                                                                       //Move assignment operator
+    std::cout << "\nmoveAssignVector: " << moveAssign << "\n";
+    std::cout << "assignVector after move: " << assignVector << "\n";
+    moveAssign.reset();                                                                                         //reset() function
+    std::cout << "\nReset moveAssign: " << moveAssign << "\n";                        
+
+
+    //Vectors for Scalar/Arithmetic Overloads
+    std::cout << "\n----------- Calculation Vectors -----------\n";
+    Vector calcVect1;                                                                                           //Default constructor
+    fillVector(calcVect1);
+    std::cout << "calcVect1: " << calcVect1 << "\n";  
+    Vector calcVect2;
+    fillVector(calcVect2);
+    std::cout << "calcVect2: " << calcVect2 << "\n"; 
     
-    // Vector v2(v1);
-    // std::cout << "V2 Dimensions: " << v2.getDimensions() << std::endl;
-    // std::cout << v2 << std::endl;
     
-    // v2 = std::move(v1);   
-    // std::cout << "New V2 Dimensions: " << v2.getDimensions() << std::endl;
-    // std::cout << v2 << std::endl;
-    // // std::cout << "V1 Dimensions after move: " << v1.getDimensions() << std::endl;
-    // // std::cout << v1 << std::endl;
+    //Scalar Overloads
+    std::cout << "\n------------ Scalar Overloads -------------" << "\n";
+    std::cout << "Scalar Multiplication: " << (calcVect1 * 3.4) << "\n";                                        //Scalar multiplication
+    std::cout << "Scalar Division: " << (calcVect1 / 5.3) << "\n";                                              //Scalar division
+    std::cout << "Scalar Subtraction: " << (calcVect1 - 1.2) << "\n";                                           //Scalar subtraction
+    std::cout << "Scalar Addition: " << (calcVect1 + 2.3) << "\n";                                              //Scalar addition
 
-    // Vector v3 = std::move(v2);   
-    // std::cout << "V3 Dimensions: " << v3.getDimensions() << std::endl;
-    // std::cout << v3 << std::endl;
+    //Vector Arithmetic Overloads
+    std::cout << "\n------- Vector Arithmetic Overloads -------" << "\n";
+    std::cout << "Dot product: " << (calcVect1*calcVect2) << "\n";                                              //Dot product
+    std::cout << "Cross Product: " << (calcVect1/calcVect2) << "\n";                                            //Cross product
+    std::cout << "Subtraction: " << (calcVect1-calcVect2) << "\n";                                              //Vector subtraction
+    std::cout << "Addition: " << (calcVect1+calcVect2) << "\n";                                                 //Vector addition
 
-    // size_type size;
-    // std::cout << "Enter V4 size: ";
-    // std::cin >> size;
-    // Vector v4(size);
-    // std::cout << "Enter V4 array: ";
-    // std::cin >> v4;
-    // std::cout << "V4 Dimensions: " << v4.getDimensions() << std::endl;
-    // std::cout << v4 << std::endl;
-
-
-
-    Vector v1(abs(-3));
-    // v1 = {3,-4,5};
-    //v1[0] = getRandomInt(); v1[1] = getRandomInt(); v1[2] = getRandomInt();
-    v1[0] = 1; v1[1] = -2; v1[2] = 3;
-    std::cout << v1 << "\n";
-    // Vector v2(std::move(v1));
-    // //v2[0] = getRandomInt(); v2[1] = getRandomInt(); v2[2] = getRandomInt();
-    // //v2[0] = 0; v2[1] = 1; v2[2] = 4;
-    // std::cout << "V2 address: " << &v2 << "\n";
-    // //v2 = {2,7,-3};
-    // std::cout << "V1 + 2 = " << v1*2 << "\n";
-    // std::cout << "V2 - 2 = " << v2/2 << "\n";
-
-
-
-    
-
-
-    // std::cout << "V1 = " << v1 << "\n";
-    // std::cout << "V2 = " << v2 << "\n";
-    // element_type v1mag = v1.magnitude();
-    // element_type v2mag = v2.magnitude();
-    
-    // std::cout << "Dot product v1 * v2: " << (v1*v2) << "\n";
-    // std::cout << "Cross Product v1 / v2: " << (v1/v2) << "\n";
-    // std::cout << "Subtraction v1 - v2: " << (v1-v2) << "\n";
-    // std::cout << "Addition v1 + v2: " << (v1+v2) << "\n";
-
-    // setPrecision(2);
-    // std::cout << "V1 Magnitude = " << v1mag << "\n";
-    // std::cout << "V2 Magnitude = " << v2mag << "\n";
-    // std::cout << "Angle Between Vectors = " << angleBetweenVectors(v1,v2) << "°\n";
-    // std::cout << "Distance Between Points = " << distanceBetweenPoints(v1,v2) << "\n";
-
-    // v1.reset();
-    // std::cout << "Reset V1: " << v1 << "\n";
-
-    // std::cout << __cplusplus << std::endl;
-    
+    //Additional Calculations
+    std::cout << "\n--------- Additional Calculations ---------" << "\n";
+    std::cout << "calcVect1 Magnitude = " << calcVect1.magnitude() << "\n";
+    std::cout << "calcVect2 Magnitude = " << calcVect2.magnitude() << "\n";
+    std::cout << "Angle Between Vectors = " << angleBetweenVectors(calcVect1,calcVect2) << "°\n";
+    std::cout << "Distance Between Points = " << distanceBetweenPoints(calcVect1,calcVect2) << "\n\n";
 }
+
 
 void setPrecision(int precision) {
     std::cout.setf(std::ios::fixed);
@@ -93,7 +104,14 @@ void setPrecision(int precision) {
     std::cout.precision(precision);
 }
 
-int getRandomInt() {
-    //Random int betwenn -9 and 9
-    return (rand()%20 - 10);
+double getRandomElementType() {
+    //Random int betwenn -1000 and 1000
+    int randInt = rand() % 2001 - 1000;
+    return (static_cast<double>(randInt)/100.0);
+}
+
+void fillVector(Vector& vectorIn) {
+    for(size_t i = 0; i < vectorIn.getDimensions(); ++i) {
+        vectorIn[i] = getRandomElementType();                                                               
+    }
 }

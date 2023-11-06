@@ -2,24 +2,27 @@
 #include <fstream>
 #include <iomanip>
 
-void formatFile(std::ifstream inStream, std::ofstream outStream, std::string inFile, std::string outFile);
-void printToFile(std::ofstream outStream, double sum);
-double readFromFile(std::ifstream inStream, std::string filename);
+void formatFile(std::ifstream &inStream, std::ofstream &outStream);
+void printToFile(std::ofstream &outStream, double sum);
+double readFromFile(std::ifstream &inStream);
 
 int main() {
 
     std::string filename1 = "DoubleFile.txt";
     std::string filename2 = "SumFile.txt";
+    std::string filename3 = "FormatFile.txt";
     std::ifstream inStream(filename1);
     std::ofstream outStream(filename2);
-    double sum;
-
-    sum = readFromFile(inStream, filename1);
+    std::ofstream outStream2(filename3);
+    
+    double sum = readFromFile(inStream);
+    inStream.close();
+    inStream.open(filename1);
     printToFile(outStream, sum);
-    //formatFile(inStream, filename1, filename2);
+    formatFile(inStream, outStream2);
 }
 
-void formatFile(std::ifstream inStream, std::ofstream outStream, std::string inFile, std::string outFile) {
+void formatFile(std::ifstream &inStream, std::ofstream &outStream) {
 
     double num;
     if( inStream.is_open() ) {
@@ -46,7 +49,7 @@ void formatFile(std::ifstream inStream, std::ofstream outStream, std::string inF
     }
 }
 
-void printToFile(std::ofstream outStream, double sum) {
+void printToFile(std::ofstream &outStream, double sum) {
     if( outStream.is_open() ) {
         outStream.setf(std::ios::fixed);
         outStream.setf(std::ios::showpoint);
@@ -58,7 +61,7 @@ void printToFile(std::ofstream outStream, double sum) {
     }
 }
 
-double readFromFile(std::ifstream inStream, std::string filename) {
+double readFromFile(std::ifstream &inStream) {
     //std::ifstream inStream(filename);
     double num;
     double sum = 0;
