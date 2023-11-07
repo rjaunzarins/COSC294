@@ -5,7 +5,8 @@
 #include <ctime>
 #include "vector.h"
 
-//?using element_type = double;
+using element_type = double;
+using size_type = unsigned int;
 
 
 //Set double precision to specified amount
@@ -51,7 +52,7 @@ int main() {
     //Assignment Overloads
     std::cout << "\n----------- Assignment Overloads ----------" << "\n";
     Vector assignVector(3);
-    assignVector[0]=1; assignVector[1]=2; assignVector[2]=3;
+    fillVector(assignVector);
     std::cout << "assignVector: " << assignVector << "\n";
     Vector copyAssign;
     copyAssign = assignVector;                                                                                  //Copy assignment operator
@@ -98,20 +99,20 @@ int main() {
 }
 
 
-void setPrecision(int precision) {
+void setPrecision(size_type precision) {
     std::cout.setf(std::ios::fixed);
     std::cout.setf(std::ios::showpoint);
     std::cout.precision(precision);
 }
 
-double getRandomElementType() {
+element_type getRandomElementType() {
     //Random int betwenn -1000 and 1000
     int randInt = rand() % 2001 - 1000;
-    return (static_cast<double>(randInt)/100.0);
+    return (static_cast<element_type>(randInt)/100.0);
 }
 
 void fillVector(Vector& vectorIn) {
-    for(size_t i = 0; i < vectorIn.getDimensions(); ++i) {
+    for(size_type i = 0; i < vectorIn.getDimensions(); ++i) {
         vectorIn[i] = getRandomElementType();                                                               
     }
 }

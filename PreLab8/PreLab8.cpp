@@ -1,8 +1,10 @@
 #include <iostream>
 #include <fstream>
 #include <iomanip>
+#include <sstream>
 
-void formatFile(std::ifstream &inStream, std::ofstream &outStream);
+void appendFormatToSumFile(std::ifstream &inStream, std::ofstream &outStream);
+void formatToFile(std::ifstream &inStream, std::ofstream &outStream);
 void printToFile(std::ofstream &outStream, double sum);
 double readFromFile(std::ifstream &inStream);
 
@@ -14,40 +16,68 @@ int main() {
     std::ifstream inStream(filename1);
     std::ofstream outStream(filename2);
     std::ofstream outStream2(filename3);
+    std::ofstream outStream3(filename2, std::ios::app);
     
     double sum = readFromFile(inStream);
     inStream.close();
     inStream.open(filename1);
     printToFile(outStream, sum);
-    formatFile(inStream, outStream2);
+    //formatToFile(inStream, outStream2);
+    appendFormatToSumFile(inStream, outStream3);
 }
 
-void formatFile(std::ifstream &inStream, std::ofstream &outStream) {
-
+void formatToFile(std::ifstream &inStream, std::ofstream &outStream) {
     double num;
+    std::stringstream str;
+    if( inStream.is_open() ) {
+        str.setf(std::ios::fixed);
+        str.setf(std::ios::showpoint);
+        while( inStream >> num ) {
+            str << std::setprecision(2) << num << "\n";
+        }
+        if( inStream.eof() ) {
+            std::cout << "End of file reached2.\n";
+        }
+        else if( inStream.fail() ) {
+            std::cerr << "Failed to read.\n";
+        }
+        outStream << str.str();
+        std::cout << "\nPrinted.\n";
+    }
+    else {
+        std::cerr << "Unable to open file.\n";
+    }    
+}
+
+void appendFormatToSumFile(std::ifstream &inStream, std::ofstream &outStream) {
+    double num;
+    std::stringstream str;
     if( inStream.is_open() ) {
         if( outStream.is_open() ) {
+            str.setf(std::ios::fixed);
+            str.setf(std::ios::showpoint);
             while( inStream >> num ) {
-                outStream << std::setw(8) << num << "\n";
-                std::cout << std::setw(8) << num << "\n";
+                str << std::setprecision(2) << num << "\n";
             }
-            std::cout << "\nPrinted to file2.\n";
             if( inStream.eof() ) {
                 std::cout << "End of file reached2.\n";
             }
             else if( inStream.fail() ) {
                 std::cerr << "Failed to read.\n";
-                //inStream.clear();
             }
+            outStream << "Doubles read for sum:\n";
+            outStream << str.str();
+            outStream << "Printed.\n";
         }
         else {
-        std::cerr << "Unable to open file.\n";
-    }    
+            std::cerr << "Unable to open.\n";
+        }
     }
     else {
         std::cerr << "Unable to open file.\n";
-    }
+    }    
 }
+
 
 void printToFile(std::ofstream &outStream, double sum) {
     if( outStream.is_open() ) {
@@ -57,12 +87,11 @@ void printToFile(std::ofstream &outStream, double sum) {
         std::cout << sum << "\nPrinted to file1.\n";
     }
     else {
-        std::cerr << "Unable to open file.\n";
+        std::cerr << "Unable to open output file.\n";
     }
 }
 
 double readFromFile(std::ifstream &inStream) {
-    //std::ifstream inStream(filename);
     double num;
     double sum = 0;
     
@@ -77,12 +106,10 @@ double readFromFile(std::ifstream &inStream) {
         }
         else if( inStream.fail() ) {
             std::cerr << "Failed to read.\n";
-            //inStream.clear();
         }
     }
     else {
-        std::cerr << "Unable to open file.\n";
-        //inStream.clear();
+        std::cerr << "Unable to open input file.\n";
     }
     return sum;
 }
