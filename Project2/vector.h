@@ -3,7 +3,6 @@
 #ifndef VECTOR_H
 #define VECTOR_H
 #include <iostream>
-#include <cmath>
 
 using size_type = unsigned int;
 using element_type = double;
@@ -36,7 +35,7 @@ class Vector {
          * Postcondition: Moves all data from incoming Vector to new Vector.
          * Resets all data in incoming Vector to zeroes.
         */
-        Vector(Vector&&);                                                 
+        Vector(Vector&&) noexcept;                                                 
         
         /**
          * Vector Destructor
@@ -76,7 +75,7 @@ class Vector {
          * Vector and resets data in incoming Vector to all zeroes. 
          * Returns a reference to the new Vector.
         */
-        const Vector& operator =(Vector&&);                      
+        const Vector& operator =(Vector&&) noexcept;                      
         
         /**
          * Multiplication Overload - Scalar

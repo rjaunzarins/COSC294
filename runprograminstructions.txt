@@ -19,3 +19,9 @@ g++ -std=c++20 -o VectorTester VectorTester.cpp vector.cpp
 
 Multiple Files clang++:
 clang++ -std=c++20 -o VectorTester VectorTester.cpp vector.cpp
+
+Single File g++:
+g++ -std=c++20 PreLab6.cpp
+
+Single File clang++:
+clang++ -std=c++20 PreLab6.cpp

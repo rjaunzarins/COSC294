@@ -15,7 +15,7 @@ Vector::Vector(const Vector& vectorIn) : dimensions(vectorIn.dimensions), data(n
 }    
 
 //Move Constructor
-Vector::Vector(Vector&& vectorIn) : dimensions(vectorIn.dimensions), data(vectorIn.data) {
+Vector::Vector(Vector&& vectorIn) noexcept : dimensions(vectorIn.dimensions), data(vectorIn.data) {
     vectorIn.dimensions = 0;
     vectorIn.data = nullptr; 
 }
@@ -46,7 +46,7 @@ const Vector& Vector::operator =(const Vector& vectorIn) const {
 }               
 
 //Equality Operator Overload - Move Vector
-const Vector& Vector::operator =(Vector&& vectorIn) {
+const Vector& Vector::operator =(Vector&& vectorIn) noexcept {
     if(this != &vectorIn) {
         delete [] data;
         dimensions = vectorIn.dimensions; 
@@ -100,7 +100,7 @@ const Vector Vector::operator -(element_type scalar) const {
  //Addition Operator Overload - Vector Addition
 const Vector Vector::operator +(const Vector& vectorIn) const {
     if(dimensions != vectorIn.dimensions) {
-        std::cerr << "Error: Vectors must be of the same size for vector addition\n";
+        std::cerr << "Error - must have the same dimension" << "\n";
         exit(1);
     }
     Vector summedVector(dimensions);
@@ -113,7 +113,7 @@ const Vector Vector::operator +(const Vector& vectorIn) const {
 //Subtraction Operator Overload - Vector Subtraction
 const Vector Vector::operator -(const Vector& vectorIn) const {
     if(dimensions != vectorIn.dimensions) {
-        std::cerr << "Error: Vectors must be of the same size for vector subtraction\n";
+        std::cerr << "Error - must have the same dimension" << "\n";
         exit(1);
     }
     Vector subtractedVector(dimensions);
@@ -126,7 +126,7 @@ const Vector Vector::operator -(const Vector& vectorIn) const {
 //Multiplication Operator Overload - Dot Product
 const element_type Vector::operator *(const Vector& vectorIn) const {
     if(dimensions != vectorIn.dimensions) {
-        std::cerr << "Error: Vectors must be of the same size for dot product\n";
+        std::cerr << "Error - must have the same dimension" << "\n";
         exit(1);
     }
     element_type dotProduct = 0;
@@ -139,7 +139,7 @@ const element_type Vector::operator *(const Vector& vectorIn) const {
 //Division Operator Overload - Cross Product
 const Vector Vector::operator /(const Vector& vectorIn) const {
     if(dimensions != 3 || vectorIn.dimensions != 3) {
-        std::cerr << "Error: Vectors must both be of dimension 3\n";
+        std::cerr << "Error: Vectors must both have dimension 3\n";
         exit(1);
     }
     Vector crossProduct(3);
@@ -161,19 +161,19 @@ const element_type Vector::magnitude() const {
 //angleBetweenVectors Function
 const element_type angleBetweenVectors(const Vector& vectorIn1, const Vector& vectorIn2) {
     if(vectorIn1.dimensions != vectorIn2.dimensions) {
-        std::cerr << "Error - must be of same dimension" << "\n";
+        std::cerr << "Error - must have the same dimension" << "\n";
         exit(1);
     }
     double cosineAngle = ( (vectorIn1*vectorIn2) / ((vectorIn1.magnitude()) * (vectorIn2.magnitude())) );
-    double radAngle = acos(cosineAngle);       //Angle in Radians
-    return ( radAngle * (180/M_PI) );          //Return angle in degrees
+    double radAngle = acos(cosineAngle);                //Angle in Radians
+    return ( radAngle * (180/3.14159) );                //Return angle in degrees
     
 }
 
 //distanceBetweenPoints Function
 const element_type distanceBetweenPoints(const Vector& vectorIn1, const Vector& vectorIn2) {
     if(vectorIn1.dimensions != vectorIn2.dimensions) {
-        std::cerr << "Error - must be of same dimension" << "\n";
+        std::cerr << "Error - must have the same dimension" << "\n";
         exit(1);
     }
     double sumOfSquares = 0;
@@ -209,7 +209,13 @@ std::istream& operator >>(std::istream& inStream, Vector& vectorIn) {
     }
     for (size_type i = 0; i < vectorIn.getDimensions(); ++i) {      
         if(!(inStream >> vectorIn[i])) {
-            std::cin.clear(); 
+            std::cin.clear();
+            if(inStream >> eatChar) {
+                if(eatChar == '}') {
+                    std::cout << "Zero Vector.\n";
+                    return inStream;
+                }
+            }
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n'); 
             std::cerr << "\nInvalid Input." << std::endl;
             return inStream;
