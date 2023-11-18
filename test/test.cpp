@@ -1,7 +1,9 @@
 #include <iostream>
 #include <ctime>
 #include <cstdlib>
+#include <stdlib.h>
 #include <vector>
+
 
 bool isPalindrome(int x);
 bool isPalindromeNoString(int x);
@@ -9,6 +11,11 @@ int getAnswer();
 std::vector<int> twoSum(std::vector<int>& nums, int target);
 std::vector<int> twoSumVersion2(std::vector<int>& nums, int target);
 std::vector<std::vector<int>> threeSum(std::vector<int>& nums);
+
+
+#define RED "\033[31m"      // use red font
+#define RESET "\033[0m"
+
 
 int main(){
 
@@ -31,10 +38,20 @@ int main(){
     //     std::cout << " ";
     // }
     // std::cout << std::endl; 
-    int num = 12121;
-    bool pal;
-    std::cout << "isPalindrome: " << (pal = isPalindrome(num));
-    std::cout << "\nisPalindromeNoString: " << (pal = isPalindromeNoString(num));
+    // int num = 12121;
+    // bool pal;
+    // std::cout << "isPalindrome: " << (pal = isPalindrome(num));
+    // std::cout << "\nisPalindromeNoString: " << (pal = isPalindromeNoString(num));
+
+
+    char c = 'A';
+
+    std::cout << c << "\n";
+    ++c;
+    //system("Color 04");         //change colour to red 
+    std::cout << RED << "Hello" << RESET << "\n";
+
+
 }
 
 

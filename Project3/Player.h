@@ -1,18 +1,19 @@
 #ifndef PLAYER_H
 #define PLAYER_H
 #include "Board.h"
+#include "Move.h"
 #include <string>
 
 class Player {
     public:
         Player(const std::string&);
-        virtual ~Player() { delete &board; }    //Why does Player have destructor? if because of board, wouldnt board have its own destructor?
+        virtual ~Player() { delete &playerBoard; }    //Why does Player have destructor? if because of board, wouldnt board use its own destructor?
         const std::string& getName() const;
-        Move getMove();
+        virtual Move getMove() = 0;
         Board& getBoard();
     private:
-        std::string name;
-        Board& board;
+        std::string playerName;
+        Board& playerBoard;
 };
 
 #endif

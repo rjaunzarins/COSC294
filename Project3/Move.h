@@ -1,5 +1,10 @@
+#ifndef MOVE_H
+#define MOVE_H
+
 struct Move {
-    int row;
-    int col;
     int getIndex();
+    int row;
+    char col;
 };
+
+#endif
