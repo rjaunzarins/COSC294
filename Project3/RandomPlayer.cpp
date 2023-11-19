@@ -2,44 +2,44 @@
 
 Move RandomPlayer::getMove() {
     std::mt19937_64 randomGenerator; // ( std::random_device().operator()() );
-    int row = randomGenerator() % 10 + 1;
+    Move move;
+    move.row = randomGenerator() % 10 + 1;
     int colNum = randomGenerator() % 10 + 1;
-    char colChar;
-    
     switch(colNum) {
         case 1:
-            colChar = 'A';
+            move.col = 'A';
             break;
         case 2:
-            colChar = 'B';
+            move.col = 'B';
             break;
         case 3:
-            colChar = 'C';
+            move.col = 'C';
             break;
         case 4:
-            colChar = 'D';
+            move.col = 'D';
             break;
         case 5:
-            colChar = 'E';
+            move.col = 'E';
             break;
         case 6:
-            colChar = 'F';
+            move.col = 'F';
             break;
         case 7:
-            colChar = 'G';
+            move.col = 'G';
             break;
         case 8:
-            colChar = 'H';
+            move.col = 'H';
             break;
         case 9:
-            colChar = 'I';
+            move.col = 'I';
             break;
         case 10:
-            colChar = 'J';
+            move.col = 'J';
             break;
         default:
-            colChar = 'A';
+            move.col = 'A';
             std::cerr << "Error in random conversion!\n";
     }
-    return Move(row,colChar);
+    //return Move(row,colChar); //!cannot do this becuase construct doesnt exist like this
+    return move;
 }

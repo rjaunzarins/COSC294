@@ -2,6 +2,6 @@
 
 char ComputerPlayer::sharedCounter = 'A';
 
-ComputerPlayer::ComputerPlayer() : Player("Computer " + sharedCounter) { 
+ComputerPlayer::ComputerPlayer() : Player(name += sharedCounter) { 
     ++sharedCounter;
 }

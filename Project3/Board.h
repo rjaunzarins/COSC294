@@ -5,7 +5,7 @@
 
 enum class EnemyPiece { HIT, MISS, EMPTY };
 
-enum class PlayerPiece { AIRCRAFT = 5, BATTLESHIP = 4, CRUISER = 3, SUBMARINE = 3, PATROL = 2, EMPTY = 0 };
+enum class PlayerPiece { AIRCRAFT, BATTLESHIP, CRUISER, SUBMARINE, PATROL, EMPTY };
 
 class Board {   //Shouldnt board have destructor if arrays are dynamic?
     public:

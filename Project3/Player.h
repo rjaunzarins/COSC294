@@ -6,14 +6,14 @@
 
 class Player {
     public:
-        Player(const std::string&);
-        virtual ~Player() { delete &playerBoard; }    //Why does Player have destructor? if because of board, wouldnt board use its own destructor?
-        const std::string& getName() const;
-        virtual Move getMove() = 0;
-        Board& getBoard();
+        Player(const std::string&);                     //Should this be inlined?
+        virtual ~Player() { delete &playerBoard; }      //Should this be implemented? Why does Player have destructor? if because of board, wouldnt board use its own destructor?
+        const std::string& getName() const { return playerName; }
+        virtual Move getMove() = 0;                     //Pure virtual
+        Board& getBoard() { return playerBoard; }
     private:
         std::string playerName;
-        Board& playerBoard;
+        Board playerBoard;
 };
 
 #endif

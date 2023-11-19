@@ -3,7 +3,7 @@
 class Game {
     public:
         void selectPlayers();
-        Player* nextPlayer() const;
+        std::unique_ptr<Player> nextPlayer() const;
         bool isRunning() const;
         void play();
         void announceWinner();
