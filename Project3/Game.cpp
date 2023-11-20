@@ -16,9 +16,9 @@ void Game::selectPlayers() {
     }
 }
 
-std::unique_ptr<Player> Game::nextPlayer() const {  //! changed the return from Player* to uniqueptr
-    return std::move(player1);
-}
+//std::unique_ptr<Player> Game::nextPlayer() const {  //! changed the return from Player* to uniqueptr
+//     return std::move(player1);
+// }
 
 bool Game::isRunning() const {
     return false; //!default setting to compile

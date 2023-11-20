@@ -7,7 +7,7 @@ class HumanPlayer : public Player {
     public:
         HumanPlayer(const std::string&);
         const std::string& getName() const;
-        Move getMove();
+        Move getMove() override;
         Board& getBoard();
     private:
 };

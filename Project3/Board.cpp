@@ -43,7 +43,26 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
     outStream << "-------------------------------------------------\n";
     for(int i = 0; i < 10; ++i) { 
         for(int j = 0; j < 10; ++j) {
-            outStream << "| " << static_cast<int>(board.playerBoard[(10 * i)+j]) << " ";
+            switch(board.playerBoard[(10*i)+j]) {
+                case PlayerPiece::AIRCRAFT:
+                    outStream << "| A ";
+                    break;
+                case PlayerPiece::BATTLESHIP:
+                    outStream << "| B ";
+                    break;
+                case PlayerPiece::CRUISER:
+                    outStream << "| C ";
+                    break;
+                case PlayerPiece::SUBMARINE:
+                    outStream << "| S ";
+                    break;
+                case PlayerPiece::PATROL:
+                    outStream << "| P ";
+                    break;
+                case PlayerPiece::EMPTY:
+                    outStream << "| E ";
+                    break;
+            }
         }
         outStream << "\n-------------------------------------------------\n";
     }
@@ -53,7 +72,17 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
     outStream << "-------------------------------------------------\n";
     for(int i = 0; i < 10; ++i) { 
         for(int j = 0; j < 10; ++j) {
-            outStream << "| " << static_cast<int>(board.enemyBoard[(10 * i)+j]) << " ";
+            switch(board.enemyBoard[(10*i)+j]) {
+                case EnemyPiece::HIT:
+                    outStream << "| H ";
+                    break;
+                case EnemyPiece::MISS:
+                    outStream << "| M ";
+                    break;
+                case EnemyPiece::EMPTY:
+                    outStream << "| E ";
+                    break;
+            }
         }
         outStream << "\n-------------------------------------------------\n";
     }
