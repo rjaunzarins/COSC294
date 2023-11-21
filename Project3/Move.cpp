@@ -40,3 +40,7 @@ int Move::getIndex() {
     }
     return row + conversion;
 }
+
+char convertToChar(int numToConvert) {
+    return static_cast<char>(numToConvert);
+}

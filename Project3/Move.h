@@ -3,6 +3,7 @@
 
 struct Move {
     int getIndex();
+    char convertToChar(int);   //! made for board class conversion
     int row;
     char col;
 };

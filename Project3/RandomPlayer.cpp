@@ -1,10 +1,14 @@
 #include "RandomPlayer.h"
 
 Move RandomPlayer::getMove() {
-    std::mt19937_64 randomGenerator; // ( std::random_device().operator()() );
     Move move;
-    move.row = randomGenerator() % 10 + 1;
-    int colNum = randomGenerator() % 10 + 1;
+    //Seed Generator
+    std::random_device randomGenerator;
+    //Mersenne Twister
+    std::mt19937_64 rand(randomGenerator());
+    
+    move.row = rand() % 10 + 1;
+    int colNum = rand() % 10 + 1;
     switch(colNum) {
         case 1:
             move.col = 'A';

@@ -3,11 +3,11 @@
 class Game {
     public:
         void selectPlayers();
-        std::unique_ptr<Player> nextPlayer() const;
-        bool isRunning() const;
+        Player* nextPlayer() const;
         void play();
         void announceWinner();
     private:
+        bool isRunning() const;
         std::unique_ptr<Player> player1;
         std::unique_ptr<Player> player2;
 };
