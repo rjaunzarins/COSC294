@@ -2,6 +2,14 @@
 #include "Board.h"
 #include "Move.h"
 #include <random>
+//ANSI escape codes for text color
+#define RESET   "\033[0m"       
+#define RED     "\033[31m"
+#define GREEN   "\033[32m"
+#define BLUE    "\033[34m"
+#define MAGENTA "\033[35m"
+#define YELLOW  "\033[33m"
+#define GREY    "\033[2m" 
 
 //Default constructor that initializes the board by calling the member 
 //function reset(). 
@@ -39,6 +47,8 @@ void Board::reset() {
             //Place Ships . . .
             size_t row = rand() % 10;
             size_t col = rand() % 10;
+            size_t verticalPlacement = rand() % 2;
+            std::cout << "Vertical Placement: " << verticalPlacement << "\n";
             size_t targetElement = (10 * row) + col;
             if(playerBoard[targetElement] == PlayerPiece::EMPTY) {
                 switch(boatType) {
@@ -53,6 +63,7 @@ void Board::reset() {
                     case 2:
                         numElements = 3;
                         currentPiece = PlayerPiece::CRUISER;
+                        break;
                     case 3:
                         numElements = 3;
                         currentPiece = PlayerPiece::SUBMARINE;
@@ -63,22 +74,45 @@ void Board::reset() {
                         break;
                     default:
                         std::cerr << "Error in assigning boat type!\n";
+                        currentPiece = PlayerPiece::EMPTY;
                         exit(1);
                 }
                 elementsLegal = true;
-                for(targetElement; targetElement < targetElement + numElements; ++targetElement) {
-                    Move move;
+                Move move;
+                size_t finalElement = targetElement + numElements;
+                for(size_t i = targetElement ; i < finalElement; ++i) {
                     move.row = row;
-                    move.col = move.convertToChar(col);         //! made this function for conversion (move.cpp)
+                    move.col = static_cast<char>('A' + col);
+                    std::cout << "Check - target element: " << targetElement << "\n";
                     if(!Board::isLegal(move)) {
                         elementsLegal = false;
+                        break;  //! break if cannot continue
+                    }
+                    if(verticalPlacement) {
+                        ++row;
+                    }
+                    else {
+                        ++col;
                     }
                 }
                 if(elementsLegal) {
-                    for(targetElement; targetElement < targetElement + numElements; ++targetElement) {
-                        playerBoard[targetElement] = currentPiece;
+                    move.col = move.col - numElements;
+                    col = col - numElements;
+                    if(verticalPlacement) {    
+                        for(size_t i = targetElement ; i < finalElement; ++i) {                            
+                            std::cout << "Vertical - target element: " << i << "\n";
+                            playerBoard[targetElement] = currentPiece;
+                            targetElement = targetElement + 10;
+                        }
+                    }
+                    else {
+                        for(size_t i = targetElement ; i < finalElement; ++i) {
+                            std::cout << "Horizontal - target element: " << i << "\n";
+                            playerBoard[i] = currentPiece;
+                        }
                     }
                 }
+                std::cout << "----------------------\n";
             }
         }
     }
@@ -94,65 +128,78 @@ void Board::makeMove(Move move, bool isPlayer) {
 //Retuns false if out of bounds of the board, or if the Move has already been done 
 //by checking the enemy's board.
 bool Board::isLegal(Move move) {
+    std::cout << "Element " << (move.row * 10) + (static_cast<int>(move.col) - 65) << " is ";
     if(move.row >= 0 && move.row <= 9 && move.col >= 'A' && move.col <= 'J') {
-        return true;
+        if(playerBoard[(move.row * 10) + (static_cast<int>(move.col) - 65)] == PlayerPiece::EMPTY) {
+            std::cout << "legal\n";
+            return true;
+        }    
     }
+    std::cout << "not legal\n";
     return false;
 }
 
 //Displays both the boards to the specified stream
 std::ostream& operator <<(std::ostream& outStream, const Board& board) {
-    outStream << "-- PLAYER BOARD --";
+    outStream << "\n-- PLAYER BOARD --";
     for(size_t i = 0; i < 10; ++i) { 
-        outStream << "\n-------------------------------------------------\n";
+        outStream << "\n-----------------------------------------\n";
         for(size_t j = 0; j < 10; ++j) {
             switch(board.playerBoard[(10*i)+j]) {
                 case PlayerPiece::AIRCRAFT:
-                    outStream << "| A ";
+                    outStream << "| " << RED << "A " << RESET;
                     break;
                 case PlayerPiece::BATTLESHIP:
-                    outStream << "| B ";
+                    outStream << "| " << GREEN << "B " << RESET;
                     break;
                 case PlayerPiece::CRUISER:
-                    outStream << "| C ";
+                    outStream << "| " << BLUE << "C " << RESET;
                     break;
                 case PlayerPiece::SUBMARINE:
-                    outStream << "| S ";
+                    outStream << "| " << MAGENTA << "S " << RESET;
                     break;
                 case PlayerPiece::PATROL:
-                    outStream << "| P ";
+                    outStream << "| " << YELLOW << "P " << RESET;
                     break;
                 case PlayerPiece::EMPTY:
-                    outStream << "| E ";
+                    outStream << "| " << GREY << "O " << RESET;
                     break;
                 default:
                     std::cerr << "Error in Enum PlayerBoard";
                     exit(1);
             }
-        }
-    }
-    outStream << "\n";
-
-    outStream << "-- ENEMY BOARD --";
-    for(size_t i = 0; i < 10; ++i) { 
-        outStream << "\n-------------------------------------------------\n";
-        for(size_t j = 0; j < 10; ++j) {
-            switch(board.enemyBoard[(10*i)+j]) {
-                case EnemyPiece::HIT:
-                    outStream << "| H ";
-                    break;
-                case EnemyPiece::MISS:
-                    outStream << "| M ";
-                    break;
-                case EnemyPiece::EMPTY:
-                    outStream << "| E ";
-                    break;
-                default:
-                    std::cerr << "Error in Enum EnemyBoard";
-                    exit(1);
+            if(j == 9) {
+                std::cout << "|";
             }
+            
         }
     }
-    outStream << "\n";
+    outStream << "\n-----------------------------------------\n";
+    
+
+    // outStream << "\n-- ENEMY BOARD --";
+    // for(size_t i = 0; i < 10; ++i) { 
+    //     outStream << "\n-----------------------------------------\n";
+    //     for(size_t j = 0; j < 10; ++j) {
+    //         switch(board.enemyBoard[(10*i)+j]) {
+    //             case EnemyPiece::HIT:
+    //                 outStream << "| H ";
+    //                 break;
+    //             case EnemyPiece::MISS:
+    //                 outStream << "| M ";
+    //                 break;
+    //             case EnemyPiece::EMPTY:
+    //                 outStream << "| E ";
+    //                 break;
+    //             default:
+    //                 std::cerr << "Error in Enum EnemyBoard";
+    //                 exit(1);
+    //         }
+    //         if(j == 9) {
+    //             std::cout << "|";
+    //         }
+    //     }
+    // }
+    // outStream << "\n-----------------------------------------\n";
     return outStream;
 }

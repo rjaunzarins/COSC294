@@ -6,7 +6,7 @@
 
 class RandomPlayer : public ComputerPlayer {
     public:
-        Move getMove();
+        Move getMove() override;
     private:
 };
 

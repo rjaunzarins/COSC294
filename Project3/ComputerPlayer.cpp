@@ -2,6 +2,6 @@
 
 char ComputerPlayer::sharedCounter = 'A';
 
-ComputerPlayer::ComputerPlayer() : Player(name += sharedCounter) { 
+ComputerPlayer::ComputerPlayer() : name("Computer " + std::string(1, sharedCounter)), Player(name) { 
     ++sharedCounter;
 }
