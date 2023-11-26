@@ -6,7 +6,7 @@ class ComputerPlayer : public Player {
     public:
         ComputerPlayer();
     private:
-        std::string name;
+        std::string generateName();
         static char sharedCounter;
         
 };
