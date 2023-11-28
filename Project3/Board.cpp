@@ -19,10 +19,13 @@ Board::Board() : playerBoard(new PlayerPiece[100]), enemyBoard(new EnemyPiece[10
     reset();
 }
 
-
-Board::~Board() {                //! removed for testing
-    // delete [] playerBoard;
-    // delete [] enemyBoard;
+Board::~Board() {
+    // if(playerBoard != nullptr) {
+    //     delete [] playerBoard;
+    // }
+    // if(enemyBoard != nullptr) {
+    //     delete [] enemyBoard;
+    // }
 }
 
 EnemyPiece* Board::getEnemyBoard() const noexcept{ 
@@ -155,18 +158,16 @@ void Board::makePlacement(PlayerPiece& currentPiece, bool isVerticalPlacement, s
 //Executes the move indicated by the first function parameter; the second is true 
 //if it is the player's move, and false if it was the enemy's move (i.e., this 
 //parameter indicates which array to update).
-void Board::makeMove(Move move, const Board& enemyPlayer) {                           //! bool isPlayer was changed to const Board& enemyPlayer
+void Board::makeMove(Move move, Board& enemyPlayer) {                           //! bool isPlayer was changed to const Board& enemyPlayer -> This will need to be changed to not const to make changes to enemyPlayer's playerBoard
     if(isLegal(move)) {
         size_t moveIndex = move.getIndex();
         if(enemyPlayer.getPlayerBoard()[moveIndex] != PlayerPiece::EMPTY) {             
             enemyBoard[moveIndex] = EnemyPiece::HIT;                                    //If enemies board is a ship then move is a hit
+            enemyPlayer.playerBoard[moveIndex] = PlayerPiece::DAMAGED;                  //If enemies board is a ship then move is a hit
         }
         else {
             enemyBoard[moveIndex] = EnemyPiece::MISS;                                   //If enemies board is empty then move is a miss
         }
-    }
-    else {
-        std::cout << "Move has already been made\n";                                    //! remove this because should be legal
     }
 }
 
@@ -176,9 +177,11 @@ void Board::makeMove(Move move, const Board& enemyPlayer) {                     
 bool Board::isLegal(Move move) {                                                      
     int index = move.getIndex();
     if(move.row < 0 || move.row > 9 && move.col < 'A' && move.col > 'J') {
+        std::cout << "Out of bounds!\n";
         return false;  
     }
     if(enemyBoard[index] != EnemyPiece::EMPTY) {
+        std::cout << "Move already made!\n";
         return false;
     }
     return true;  
@@ -187,7 +190,7 @@ bool Board::isLegal(Move move) {
 //The placement of an entire ship is legal
 bool Board::isLegalPlacement(Move move) {
     int index = move.getIndex();
-    if(move.row < 0 || move.row > 9 && move.col < 'A' && move.col > 'J') {
+    if(move.row < 0 || move.row > 9 || move.col < 'A' && move.col > 'J') {
         return false;  
     }
     if(playerBoard[index] != PlayerPiece::EMPTY) {
@@ -206,13 +209,13 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
         for(size_t j = 0; j < 10; ++j) {
             switch(board.enemyBoard[(10*i)+j]) {
                 case EnemyPiece::HIT:
-                    outStream << "| H ";
+                    outStream << "| " << RED << "H " << RESET;
                     break;
                 case EnemyPiece::MISS:
-                    outStream << "| M ";
+                    outStream << "| " << MAGENTA << "M " << RESET;
                     break;
                 case EnemyPiece::EMPTY:
-                    outStream << "| E ";
+                    outStream << "| " << GREY << "E " << RESET;;
                     break;
                 default:
                     std::cerr << "Error in Enum EnemyBoard";
@@ -248,6 +251,9 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
                     break;
                 case PlayerPiece::EMPTY:
                     outStream << "| " << GREY << "O " << RESET;
+                    break;
+                case PlayerPiece::DAMAGED:
+                    outStream << "| " << RED << "X " << RESET;
                     break;
                 default:
                     std::cerr << "Error in Enum PlayerBoard";

@@ -8,7 +8,7 @@ enum class Difficulty { EASY, MEDIUM, HARD };
 
 class RandomPlayer : public ComputerPlayer {
     public:
-        RandomPlayer() : ComputerPlayer() {}
+        //RandomPlayer() : ComputerPlayer() {}
         Move getMove() override;
         Move getMove(Difficulty);
     private:

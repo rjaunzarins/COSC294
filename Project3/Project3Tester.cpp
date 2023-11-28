@@ -7,19 +7,16 @@
 #include "RandomPlayer.h"
 
 bool playAgain();
-
+void printBattleship();
 
 int main() {
-    // do {
-    //     // Board b;
-    //     // std::cout << b << "\n";
-    Game g;
-    std::cout << "Point a\n";
-    g.selectPlayers();
-    std::cout << "Point b\n";
-    g.play();
-    std::cout << "Point c\n";
-    // } while(playAgain());
+    do {
+        Game g;
+        printBattleship();
+        g.selectPlayers();
+        g.play();
+        g.announceWinner();
+    } while(playAgain());
     //Player* h = new HumanPlayer("adsfasdf");
     //std::cout << "Name: " << h->getName() << "\n" << h->getBoard();
     // RandomPlayer r;
@@ -38,4 +35,20 @@ bool playAgain() {
     else {
         return false;
     }
+}
+
+void printBattleship() {
+std::cout << "\n\n\n\n\n\n\n\n\n\n\n\n\n\n";
+std::cout << "      BattleShip Game\n";
+std::cout << "                                         # #  ( )\n";
+std::cout << "                                  ___#_#___|__\n";
+std::cout << "                              _  |____________|  _\n";
+std::cout << "                       _=====| | |            | | |==== _\n";
+std::cout << "                 =====| |.---------------------------. | |====\n";
+std::cout << "   <--------------------'   .  .  .  .  .  .  .  .   '--------------/\n";
+std::cout << "    \\                                                             /\n";
+std::cout << "     \\___________________________________________________________/\n";
+std::cout << "  wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\n";
+std::cout << "wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\n";
+std::cout << "   wwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwwww\n";
 }

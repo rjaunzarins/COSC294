@@ -8,6 +8,7 @@ class HumanPlayer : public Player {
         HumanPlayer(const std::string&);
         const std::string& getName() const;
         Move getMove() override;
+        friend std::ostream& operator>>(std::ostream& os, HumanPlayer& player);
     private:
 };
 

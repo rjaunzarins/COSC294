@@ -11,6 +11,7 @@ Move HumanPlayer::getMove() {
         if(std::cin >> move.row) {
             std::cout << "Enter column [A-J]: ";
             if(std::cin >> move.col) {
+                move.col = toupper(move.col);
                 validInput = true;
             }
             else {
@@ -27,3 +28,8 @@ Move HumanPlayer::getMove() {
     }
     return move;
 }
+
+// std::ostream& operator>>(std::ostream& os, HumanPlayer& player) {
+//     os >> player.Player::setName();
+//     return os;
+// }

@@ -1,0 +1,4 @@
+Project 3 Notes - 
+
+• Input validation in selectPlayers()
+    • Be able to enter space in Human name

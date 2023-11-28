@@ -6,14 +6,14 @@
 
 enum class EnemyPiece { HIT, MISS, EMPTY };
 
-enum class PlayerPiece { AIRCRAFT, BATTLESHIP, CRUISER, SUBMARINE, PATROL, EMPTY };
+enum class PlayerPiece { AIRCRAFT, BATTLESHIP, CRUISER, SUBMARINE, PATROL, EMPTY, DAMAGED };         //* Add PlayerPiece::DAMAGED to show Player when his ships are hit
 
 class Board {   //Shouldnt board have destructor if arrays are dynamic?
     public:
         Board();
         ~Board();
         void reset();
-        void makeMove(Move, const Board&);                  //! bool isPlayer was changed to const Board& enemyPlayer otherwise we would not have access to see if hit or miss
+        void makeMove(Move, Board&);                  //! bool isPlayer was changed to const Board& enemyPlayer otherwise we would not have access to see if hit or miss
         bool isLegal(Move);
         EnemyPiece* getEnemyBoard() const noexcept;
         PlayerPiece* getPlayerBoard() const noexcept;
