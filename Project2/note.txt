@@ -1,0 +1,9 @@
+//Prevent automatic conversion from int
+class C { 
+    public:
+        explicit C(int a);
+};
+
+int main() {
+    C c = 12;  //Prevent this with explicit keyword
+}

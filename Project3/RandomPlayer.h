@@ -4,17 +4,19 @@
 #include <random>
 #include <memory>
 
-enum class Difficulty { EASY, MEDIUM, HARD };
+//enum class Difficulty { EASY, MEDIUM, HARD };
 
 class RandomPlayer : public ComputerPlayer {
     public:
         //RandomPlayer() : ComputerPlayer() {}
         Move getMove() override;
-        Move getMove(Difficulty);
+        // Move getMove(Difficulty);
     private:
-        Move easyMove(std::mt19937_64&);
-        Move mediumMove(std::mt19937_64&);
-        Move hardMove(std::mt19937_64&);
+        // Move easyMove(std::mt19937_64&);
+        // Move mediumMove(std::mt19937_64&);
+        // Move hardMove(std::mt19937_64&);
+        //Move getDirectionForMove(std::mt19937_64 rand, int i, int j);
+        //Move getElementForMove(int direction, int i, int j);
 };
 
 #endif

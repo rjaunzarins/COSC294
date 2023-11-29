@@ -20,12 +20,12 @@ Board::Board() : playerBoard(new PlayerPiece[100]), enemyBoard(new EnemyPiece[10
 }
 
 Board::~Board() {
-    // if(playerBoard != nullptr) {
-    //     delete [] playerBoard;
-    // }
-    // if(enemyBoard != nullptr) {
-    //     delete [] enemyBoard;
-    // }
+    if(playerBoard != nullptr) {
+        delete [] playerBoard;
+    }
+    if(enemyBoard != nullptr) {
+        delete [] enemyBoard;
+    }
 }
 
 EnemyPiece* Board::getEnemyBoard() const noexcept{ 
@@ -120,6 +120,7 @@ void Board::setBoatType(size_t boatType, size_t &numElementsInShip, PlayerPiece 
 
 
 bool Board::isShipPlacementLegal(Move& move, bool isVerticalPlacement, size_t targetElement, size_t finalElement) {
+    std::cout << "Target: " << targetElement << "\nFinal: " << finalElement << "\n";
     for(size_t i = targetElement ; i < finalElement; ++i) {                     //Iterate through elements from target to target + numElementsInShip in ship type
         if(!isLegalPlacement(move)) {
             return false;                                                 
@@ -154,7 +155,7 @@ void Board::makePlacement(PlayerPiece& currentPiece, bool isVerticalPlacement, s
     // }
 }
 
-
+//!leave comment that this is fine!
 //Executes the move indicated by the first function parameter; the second is true 
 //if it is the player's move, and false if it was the enemy's move (i.e., this 
 //parameter indicates which array to update).
@@ -190,7 +191,7 @@ bool Board::isLegal(Move move) {
 //The placement of an entire ship is legal
 bool Board::isLegalPlacement(Move move) {
     int index = move.getIndex();
-    if(move.row < 0 || move.row > 9 || move.col < 'A' && move.col > 'J') {
+    if(move.row < 0 || move.row > 9 || move.col < 'A' || move.col > 'J') {
         return false;  
     }
     if(playerBoard[index] != PlayerPiece::EMPTY) {

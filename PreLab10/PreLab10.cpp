@@ -35,6 +35,18 @@ class Pair {
         T secondValue;
 };
 
+template<class T>
+class third : public Pair<T> {
+    public:
+        Third( T firstValue, T secondValue, T thirdValue) : Pair<T>(firstValue, secondValue), thirdValue(thirdValue) {}
+        T getThird() { return thirdValue; }
+        T getSum() { return Pair<T>::getSum() + thirdValue; }
+    private:
+        T thirdValue;
+};
+
+
+
 
 
 // //Swap the values of two T's

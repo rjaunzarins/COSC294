@@ -16,10 +16,10 @@ void Game::selectPlayers() {
     if(type == 'H' || type == 'h') {    
         std::cout << "Player1 name: ";
         std::cin >> name;
-        player1 = std::make_unique<HumanPlayer>(HumanPlayer(name));
+        player1 = std::make_unique<HumanPlayer>((name));
     }
     else if(type == 'C' || type == 'c') {    
-        player1 = std::make_unique<RandomPlayer>(RandomPlayer());
+        player1 = std::make_unique<RandomPlayer>();
     }
     std::cout << "Player1 is: " << player1->getName() << "\n";
 
@@ -30,10 +30,10 @@ void Game::selectPlayers() {
     if(type == 'H' || type == 'h') {    
         std::cout << "Player2 name: ";
         std::cin >> name;
-        player2 = std::make_unique<HumanPlayer>(HumanPlayer(name));
+        player2 = std::make_unique<HumanPlayer>((name));
     }
     else if(type == 'C' || type == 'c') {    
-        player2 = std::make_unique<RandomPlayer>(RandomPlayer());
+        player2 = std::make_unique<RandomPlayer>();
     }
     std::cout << "Player2 is: " << player2->getName() << "\n";        
 
