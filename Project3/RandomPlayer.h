@@ -15,8 +15,6 @@ class RandomPlayer : public ComputerPlayer {
         // Move easyMove(std::mt19937_64&);
         // Move mediumMove(std::mt19937_64&);
         // Move hardMove(std::mt19937_64&);
-        //Move getDirectionForMove(std::mt19937_64 rand, int i, int j);
-        //Move getElementForMove(int direction, int i, int j);
 };
 
 #endif

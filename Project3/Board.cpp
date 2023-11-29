@@ -20,12 +20,12 @@ Board::Board() : playerBoard(new PlayerPiece[100]), enemyBoard(new EnemyPiece[10
 }
 
 Board::~Board() {
-    if(playerBoard != nullptr) {
-        delete [] playerBoard;
-    }
-    if(enemyBoard != nullptr) {
-        delete [] enemyBoard;
-    }
+    // if(playerBoard != nullptr) {
+    //     delete [] playerBoard;
+    // }
+    // if(enemyBoard != nullptr) {
+    //     delete [] enemyBoard;
+    // }
 }
 
 EnemyPiece* Board::getEnemyBoard() const noexcept{ 
