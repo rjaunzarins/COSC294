@@ -3,7 +3,12 @@
 char ComputerPlayer::sharedCounter = 'A';
 
 ComputerPlayer::ComputerPlayer() : Player(generateName()) {
-    ++sharedCounter;
+    if(sharedCounter == 'Z') {                                      
+        sharedCounter = 'A';
+    }    
+    else {
+        ++sharedCounter;
+    }
 }
 
 std::string ComputerPlayer::generateName() {

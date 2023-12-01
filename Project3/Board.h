@@ -13,7 +13,7 @@ class Board {   //Shouldnt board have destructor if arrays are dynamic?
         Board();
         ~Board();
         void reset();
-        void makeMove(Move, Board&);                  //! bool isPlayer was changed to const Board& enemyPlayer otherwise we would not have access to see if hit or miss
+        void makeMove(Move, Board&);                  //! With Permission: bool isPlayer was changed to const Board& enemyPlayer otherwise we would not have access to see if hit or miss
         bool isLegal(Move);
         EnemyPiece* getEnemyBoard() const noexcept;
         PlayerPiece* getPlayerBoard() const noexcept;
@@ -27,7 +27,7 @@ class Board {   //Shouldnt board have destructor if arrays are dynamic?
         void makePlacement(PlayerPiece&, bool, size_t, size_t);
         bool isLegalPlacement(Move move);
         PlayerPiece *playerBoard;  //WTF is going on with the boards? 
-        EnemyPiece *enemyBoard;   //How does enemypiece have only hit miss empty?      
+        EnemyPiece *enemyBoard;   //How does enemypiece have only hit miss empty?  
 };
 
 #endif

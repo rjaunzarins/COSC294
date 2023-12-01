@@ -5,6 +5,9 @@
 #include "Move.h"
 #include "Player.h"
 #include "RandomPlayer.h"
+#include "MediumPlayer.h"
+#include "HardPlayer.h"
+#include "GameColour.h"
 
 bool playAgain();
 void printBattleship();

@@ -2,15 +2,7 @@
 #include "Board.h"
 #include "Move.h"
 #include "Player.h"
-
-//ANSI escape codes for text color
-#define RESET   "\033[0m"       
-#define RED     "\033[31m"
-#define GREEN   "\033[32m"
-#define BLUE    "\033[34m"
-#define MAGENTA "\033[35m"
-#define YELLOW  "\033[33m"
-#define GREY    "\033[2m" 
+#include "GameColour.h"
 
 
 //Default constructor that initializes the board by calling the member 
@@ -20,12 +12,8 @@ Board::Board() : playerBoard(new PlayerPiece[100]), enemyBoard(new EnemyPiece[10
 }
 
 Board::~Board() {
-    // if(playerBoard != nullptr) {
-    //     delete [] playerBoard;
-    // }
-    // if(enemyBoard != nullptr) {
-    //     delete [] enemyBoard;
-    // }
+    delete [] playerBoard;
+    delete [] enemyBoard;
 }
 
 EnemyPiece* Board::getEnemyBoard() const noexcept{ 
@@ -120,7 +108,6 @@ void Board::setBoatType(size_t boatType, size_t &numElementsInShip, PlayerPiece 
 
 
 bool Board::isShipPlacementLegal(Move& move, bool isVerticalPlacement, size_t targetElement, size_t finalElement) {
-    std::cout << "Target: " << targetElement << "\nFinal: " << finalElement << "\n";
     for(size_t i = targetElement ; i < finalElement; ++i) {                     //Iterate through elements from target to target + numElementsInShip in ship type
         if(!isLegalPlacement(move)) {
             return false;                                                 
@@ -148,11 +135,6 @@ void Board::makePlacement(PlayerPiece& currentPiece, bool isVerticalPlacement, s
             playerBoard[i] = currentPiece;
         }
     }
-    
-    // size_t step = isVerticalPlacement ? 10 : 1;                          //if we can figure this out it would be cleaner
-    // for (size_t i = targetElement; i <= finalElement; i += step) {
-    //     playerBoard[i] = currentPiece;
-    // }
 }
 
 //!leave comment that this is fine!
@@ -178,11 +160,9 @@ void Board::makeMove(Move move, Board& enemyPlayer) {                           
 bool Board::isLegal(Move move) {                                                      
     int index = move.getIndex();
     if(move.row < 0 || move.row > 9 && move.col < 'A' && move.col > 'J') {
-        std::cout << "Out of bounds!\n";
-        return false;  
+        return false;                               //!
     }
-    if(enemyBoard[index] != EnemyPiece::EMPTY) {
-        std::cout << "Move already made!\n";
+    if(enemyBoard[index] != EnemyPiece::EMPTY) {    //!
         return false;
     }
     return true;  
@@ -210,13 +190,13 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
         for(size_t j = 0; j < 10; ++j) {
             switch(board.enemyBoard[(10*i)+j]) {
                 case EnemyPiece::HIT:
-                    outStream << "| " << RED << "H " << RESET;
+                    outStream << "| " << GameColour::RED << "H " << GameColour::RESET;
                     break;
                 case EnemyPiece::MISS:
-                    outStream << "| " << MAGENTA << "M " << RESET;
+                    outStream << "| " << GameColour::MAGENTA << "M " << GameColour::RESET;
                     break;
                 case EnemyPiece::EMPTY:
-                    outStream << "| " << GREY << "E " << RESET;;
+                    outStream << "| " << GameColour::GREY << "E " << GameColour::RESET;;
                     break;
                 default:
                     std::cerr << "Error in Enum EnemyBoard";
@@ -236,25 +216,25 @@ std::ostream& operator <<(std::ostream& outStream, const Board& board) {
         for(size_t j = 0; j < 10; ++j) {
             switch(board.playerBoard[(10*i)+j]) {
                 case PlayerPiece::AIRCRAFT:
-                    outStream << "| " << RED << "A " << RESET;
+                    outStream << "| " << GameColour::RED << "A " << GameColour::RESET;
                     break;
                 case PlayerPiece::BATTLESHIP:
-                    outStream << "| " << GREEN << "B " << RESET;
+                    outStream << "| " << GameColour::GREEN << "B " << GameColour::RESET;
                     break;
                 case PlayerPiece::CRUISER:
-                    outStream << "| " << BLUE << "C " << RESET;
+                    outStream << "| " << GameColour::BLUE << "C " << GameColour::RESET;
                     break;
                 case PlayerPiece::SUBMARINE:
-                    outStream << "| " << MAGENTA << "S " << RESET;
+                    outStream << "| " << GameColour::MAGENTA << "S " << GameColour::RESET;
                     break;
                 case PlayerPiece::PATROL:
-                    outStream << "| " << YELLOW << "P " << RESET;
+                    outStream << "| " << GameColour::YELLOW << "P " << GameColour::RESET;
                     break;
                 case PlayerPiece::EMPTY:
-                    outStream << "| " << GREY << "O " << RESET;
+                    outStream << "| " << GameColour::GREY << "O " << GameColour::RESET;
                     break;
                 case PlayerPiece::DAMAGED:
-                    outStream << "| " << RED << "X " << RESET;
+                    outStream << "| " << GameColour::RED << "X " << GameColour::RESET;
                     break;
                 default:
                     std::cerr << "Error in Enum PlayerBoard";
