@@ -2,10 +2,10 @@
 #include <fstream>
 #include <sstream>
 
-void printToFile(std::string filename, std::string text);
-void appendToFile(std::string filename, std::string text);
-void readFromFile(std::string filename);
-void readLineFromFile(std::string filename);
+void printToFile(const std::string& filename, const std::string& text);
+void appendToFile(const std::string& filename, const std::string& text);
+void readFromFile(const std::string& filename);
+void readLineFromFile(const std::string& filename);
 
 int main() {
     
@@ -18,7 +18,7 @@ int main() {
     readLineFromFile("stringFile.txt");
 }
 
-void printToFile(std::string filename, std::string text) {
+void printToFile(const std::string& filename, const std::string& text) {
     std::ofstream outStream(filename);
     if( outStream.is_open() ) {
         outStream << text << std::endl;
@@ -29,7 +29,7 @@ void printToFile(std::string filename, std::string text) {
     }
 }
 
-void appendToFile(std::string filename, std::string text) {
+void appendToFile(const std::string& filename, const std::string& text) {
     std::ofstream outStream(filename, std::ios::app);   //Open file in append mode
     if( outStream.is_open() ) {
         outStream << text << "\n";
@@ -40,7 +40,7 @@ void appendToFile(std::string filename, std::string text) {
     }
 }
 
-void readFromFile(std::string filename) {
+void readFromFile(const std::string& filename) {
     std::ifstream inStream(filename);
     std::string str;
     while(inStream >> str) {
@@ -49,7 +49,7 @@ void readFromFile(std::string filename) {
     std::cout << std::endl;
 }
 
-void readLineFromFile(std::string filename) {
+void readLineFromFile(const std::string& filename) {
     std::ifstream inStream(filename);
     std::string line;
     if( inStream.is_open() ) {

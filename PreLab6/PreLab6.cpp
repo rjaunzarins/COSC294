@@ -5,8 +5,9 @@
 void getUserInput(char cStirng2[]);
 int characterSearch(char arr[], char c);
 void removeCharacter(char arr[], char target);
-//void printReverseString(char cString[]);
-//void returnReverseString(char cString[]);
+void printReverseString(char cString[]);
+void returnReverseString(char cString[]);
+void reverseCString(char cString[]);
 
 int main() {
 
@@ -20,13 +21,19 @@ int main() {
     char cString2[50];
     char removeChar;
     getUserInput(cString2);
+    printReverseString(cString2);
+    reverseCString(cString2);
+    std::cout << "Reverse String: " << cString2 << std::endl;
+    printReverseString(cString2);
 
-    std::cout << "Enter character to remove: ";
-    std::cin >> removeChar;
+    // std::cout << "Enter character to remove: ";
+    // std::cin >> removeChar;
 
-    //remove char and print
-    removeCharacter(cString2, removeChar);
-    std::cout << "New String: " << cString2 << std::endl;
+    // //remove char and print
+    // removeCharacter(cString2, removeChar);
+    // std::cout << "New String: " << cString2 << std::endl;
+
+
 
 }
 
@@ -78,20 +85,29 @@ void removeCharacter(char arr[], char target) {
     arr[std::strlen(arr)] = '\0';
 }
 
-// void printReverseString(char cString[]) {
-//     std::cout << "Reverse String: ";
-//     size_t i = std::strlen(cString)-1;
-//     for( ; i <= 0; --i) {
-//         std::cout << cString[i];
-//         std::cout << "*";
-//     }
-//     std::cout << std::endl;
-// }
+void printReverseString(char cString[]) {
+    //std::cout << "Reverse String: ";
+    int len = std::strlen(cString);
+    for(int i = len-1; i >= 0; --i)
+        std::cout << cString[i];
+    std::cout << std::endl;
+}
 
-// void returnReverseString(char cString[]) {
-//     char reverseCString[100];
-//     for (size_t i = strlen(cString)-1; i <= 0; --i) {
-        
-//     }
-//     std::cout << std::endl;
-// }
+void returnReverseString(char cString[]) {
+    // int len = std::strlen(cString);
+    // char reverseCString[len];
+    // for (int i = len, j = 0; j < len; --i, ++j) 
+    //     reverseCString[j] = cString[i];
+    // reverseCString[len] = '\0';
+    // cString = reverseCString;
+}
+
+void reverseCString(char cString[]) {
+    size_t length = std::strlen(cString);
+    for (size_t i = 0, j = length - 1; i < j; ++i, --j) {
+        // Swap characters at positions i and j
+        char temp = cString[i];
+        cString[i] = cString[j];
+        cString[j] = temp;
+    }
+}

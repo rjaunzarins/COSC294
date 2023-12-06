@@ -14,35 +14,47 @@ void Game::selectPlayers() {
     char type;
     
     //Player1
-    std::cout << "\nEnter player1 type [C,H]: ";              //! make helper function and use counter to dertermine play1 or 2
-    std::cin >> type;
-    if(type == 'H' || type == 'h') {    
-        std::cout << "Player1 name: ";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::getline(std::cin, name);
-        player1 = std::make_unique<HumanPlayer>(name);
+    char userSelect = 'a';
+    while(userSelect != 'c' && userSelect != 'C' && userSelect != 'h' && userSelect != 'H') {
+        std::cout << "Enter Player1 type [C/H]: ";
+        std::cin >> userSelect;
+        if(userSelect == 'H' || userSelect == 'h') {    
+            std::cout << "Player1 name: ";
+            createHumanPlayer(player1);
+        }
+        else if(userSelect == 'c' || userSelect == 'C') {
+            getDifficulty(player1);
+        }
     }
-    else {    
-        getDifficulty(player1);
-    }
-    std::cout << "Player1 is: " << player1->getName() << "\n";
-
     //Player2
-    std::cout << "\nEnter player2 type [C,H]: ";              
-    std::cin >> type;
-    if(type == 'H' || type == 'h') {    
-        std::cout << "Player2 name: ";
-        std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-        std::getline(std::cin, name);
-        player2 = std::make_unique<HumanPlayer>(name);
+    char userSelect = 'a';
+    while(userSelect != 'c' && userSelect != 'C' && userSelect != 'h' && userSelect != 'H') {
+        std::cout << "Enter Player1 type [C/H]: ";
+        std::cin >> userSelect;
+        if(userSelect == 'H' || userSelect == 'h') {    
+            std::cout << "Player2 name: ";
+            createHumanPlayer(player2);
+        }
+        else if(userSelect == 'c' || userSelect == 'C') {
+            getDifficulty(player2);
+        }
     }
-    else {    
-        getDifficulty(player2);
-    }
-    std::cout << "Player2 is: " << player2->getName() << "\n";   
+    announcePlayers(player1, player2);  
 
     //Assign first player to player1
     currentPlayer = player2.get();     
+}
+
+void Game::announcePlayers(const std::unique_ptr<Player>& player1, const std::unique_ptr<Player>& player2) {
+    std::cout << "Player1 is: " << player1->getName() << "\n";
+    std::cout << "Player2 is: " << player2->getName() << "\n"; 
+}
+
+void Game::createHumanPlayer(std::unique_ptr<Player>& currentPlayer) {
+    std::string playerName;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+    std::getline(std::cin, playerName);
+    currentPlayer = std::make_unique<HumanPlayer>(playerName);
 }
 
 void Game::getDifficulty(std::unique_ptr<Player>& currentPlayer) {
