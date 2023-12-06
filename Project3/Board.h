@@ -8,7 +8,7 @@ enum class EnemyPiece { HIT, MISS, EMPTY };
 
 enum class PlayerPiece { AIRCRAFT, BATTLESHIP, CRUISER, SUBMARINE, PATROL, EMPTY, DAMAGED };         //* Add PlayerPiece::DAMAGED to show Player when his ships are hit
 
-class Board {   //Shouldnt board have destructor if arrays are dynamic?
+class Board {   
     public:
         Board();
         ~Board();
