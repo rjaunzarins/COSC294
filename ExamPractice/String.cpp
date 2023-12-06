@@ -7,9 +7,7 @@ std::string reverseString(const std::string& input) {
 
     for (size_t i = 0, j = length - 1; i < j; ++i, --j) {
         // Swap characters at positions i and j
-        char temp = reversedString[i];
-        reversedString[i] = reversedString[j];
-        reversedString[j] = temp;
+        std::swap(reversedString[i], reversedString[j]);
     }
 
     return reversedString;
