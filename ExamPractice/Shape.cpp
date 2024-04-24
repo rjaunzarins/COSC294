@@ -54,6 +54,11 @@ int main() {
     Shape* s2 = &r;
     Shape* s3 = &s;
 
+    std::unique_ptr<Shape> s1 = std::make_unique<Circle>(2.2);
+    Shape* currentShape = s1;
+    currentShape->display();
+
+
     s1->display();
     std::cout << "Area: " << s1->area() << "\n";
 

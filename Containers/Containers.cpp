@@ -366,3 +366,23 @@ In a balanced binary trr, the number of nodes to the left of the root is approxi
 equal to the number of nodes to the right of the root. Binary search trees are also 
 described in Chapter 17, although we do not discuss the details of balancing them.
 */
+
+
+void mapStuff() {
+    std::map<std::string, int, std::greater<std::string>> map;
+    map["abc"] = 123;
+    map["def"] = 456;
+    map["ghi"] = 789;
+    map["jkl"] = 101112;
+
+    std::map<std::string, int>::iterator itr = map.begin();
+    for(; itr != map.end(); ++itr) {
+        std::cout << "Key: " << itr->first << "Value: " << itr->second << "\n";
+    }
+    std::cout << std::endl;
+
+    for(const auto& val : map) {
+        std::cout << "Key: " << val.first << "Value: " << val.second << "\n";
+    }
+    std::cout << std::endl;
+}
