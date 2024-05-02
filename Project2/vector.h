@@ -74,7 +74,7 @@ class Vector {
          * Postcondition: Moves all data from incoming Vector to calling
          * Vector and resets data in incoming Vector to all zeroes. 
          * Returns a reference to the new Vector.
-        *///
+        */
         const Vector& operator =(Vector&&) noexcept;                      
         
         /**
