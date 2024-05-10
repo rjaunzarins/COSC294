@@ -40,7 +40,7 @@ void vectorIteratorDemo() {
         container.push_back(i);
     cout << "Here is what is in the container:\n";
     std::vector<int>::iterator itr;
-    for(itr = container.begin(); itr != container.end(); ++itr) 
+    for(itr = container.begin(); itr != container.end(); ++itr) //container.end() is one past the last element -> returns NULL
         cout << *itr;
     cout << endl;
     cout << "Setting entries to 0:\n";
